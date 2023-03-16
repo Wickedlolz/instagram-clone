@@ -3,16 +3,16 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home/Home';
 import './App.css';
+import Layout from './components/Layout/Layout';
 
 function App() {
     return (
         <FirebaseProvider>
-            <div className="App">
-                <h1>Instagram Clone</h1>
+            <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
                 </Routes>
-            </div>
+            </Layout>
         </FirebaseProvider>
     );
 }
