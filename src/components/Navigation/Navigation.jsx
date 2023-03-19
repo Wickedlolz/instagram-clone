@@ -1,7 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 
 const Navigation = () => {
+    const navigate = useNavigate();
+    const { logOut } = useFirebaseContext();
+
+    const handleSignOut = (event) => {
+        logOut()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => console.error(error));
+    };
+
     return (
         <Header>
             <Logo
@@ -27,6 +40,7 @@ const Navigation = () => {
                 <HeaderIcon
                     src="https://cdn2.iconfinder.com/data/icons/instagram-outline/19/11-512.png"
                     alt="Profile"
+                    onClick={handleSignOut}
                 />
             </HeaderButtons>
         </Header>
@@ -82,4 +96,5 @@ const HeaderButtons = styled.div`
 const HeaderIcon = styled.img`
     height: 24px;
     margin-right: 16px;
+    cursor: pointer;
 `;

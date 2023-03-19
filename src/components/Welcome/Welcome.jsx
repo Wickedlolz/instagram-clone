@@ -1,8 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 
 const Welcome = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { signIn } = useFirebaseContext();
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (email.length === 0 || password.length === 0) {
+            alert('all fields are required!');
+            return;
+        }
+
+        signIn(email, password)
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => console.error(error));
+    };
+
     return (
         <Container>
             <ImageContainer>
@@ -33,9 +54,19 @@ const Welcome = () => {
             </ImageContainer>
             <FormContainer>
                 <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
-                <Form>
-                    <Input type="text" placeholder="Username" />
-                    <Input type="password" placeholder="Password" />
+                <Form onSubmit={handleSubmit}>
+                    <Input
+                        type="email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder="Email"
+                    />
+                    <Input
+                        type="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        placeholder="Password"
+                    />
                     <Button>Log In</Button>
                 </Form>
                 <ForgotPassword>Forgot password?</ForgotPassword>

@@ -14,10 +14,10 @@ export const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState({});
 
     const signUp = (email, password) =>
-        createUserWithEmailAndPassword(email, password);
+        createUserWithEmailAndPassword(auth, email, password);
 
     const signIn = (email, password) =>
-        signInWithEmailAndPassword(email, password);
+        signInWithEmailAndPassword(auth, email, password);
 
     const logOut = () => signOut(auth);
 
@@ -37,5 +37,6 @@ export const FirebaseProvider = ({ children }) => {
 };
 
 export const useFirebaseContext = () => {
-    return useContext(FirebaseContext);
+    const state = useContext(FirebaseContext);
+    return state;
 };

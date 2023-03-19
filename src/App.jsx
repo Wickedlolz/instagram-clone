@@ -2,8 +2,9 @@ import { FirebaseProvider } from './contexts/FirebaseContext';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home/Home';
-import './App.css';
 import Layout from './components/Layout/Layout';
+
+import './App.css';
 
 function App() {
     return (

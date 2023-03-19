@@ -6,9 +6,9 @@ import Navigation from '../Navigation/Navigation';
 const Layout = ({ children }) => {
     const { user } = useFirebaseContext();
 
-    // if (!user) {
-    //     return <Welcome />;
-    // }
+    if (!user) {
+        return <Welcome />;
+    }
 
     return (
         <main>
