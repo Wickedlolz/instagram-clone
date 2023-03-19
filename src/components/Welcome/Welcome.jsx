@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 
@@ -69,7 +69,26 @@ const Welcome = () => {
                     />
                     <Button>Log In</Button>
                 </Form>
+                <SeparatorContainer>
+                    <SeparatorLine />
+                    <OrText>OR</OrText>
+                    <SeparatorLine />
+                </SeparatorContainer>
+                <GoogleButton href="https://www.facebook.com/login">
+                    <GoogleIcon className="fa-brands fa-google" />
+                    Log in with Google
+                </GoogleButton>
+                <ErrorField>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Libero, repellendus!
+                </ErrorField>
                 <ForgotPassword>Forgot password?</ForgotPassword>
+                <RegisterContainer>
+                    <RegisterText>Not registered?</RegisterText>
+                    <RegisterButton to="/accounts/register">
+                        Register
+                    </RegisterButton>
+                </RegisterContainer>
             </FormContainer>
         </Container>
     );
@@ -149,6 +168,19 @@ const Button = styled.button`
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+    &:hover {
+        background-color: rgb(24, 119, 242);
+    }
+`;
+
+const ErrorField = styled.p`
+    color: red;
+    padding-top: 20px;
+    width: 300px;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 14px;
 `;
 
 const ForgotPassword = styled.p`
@@ -156,4 +188,61 @@ const ForgotPassword = styled.p`
     font-size: 14px;
     color: #003569;
     cursor: pointer;
+`;
+
+const SeparatorContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+`;
+
+const SeparatorLine = styled.div`
+    width: 130px;
+    height: 1px;
+    background-color: #dbdbdb;
+`;
+
+const OrText = styled.span`
+    margin: 0 10px;
+    font-size: 14px;
+    color: #8e8e8e;
+`;
+
+const GoogleButton = styled.a`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 5px;
+    background-color: #385185;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+`;
+
+const GoogleIcon = styled.i`
+    margin-right: 15px;
+`;
+
+const RegisterContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+`;
+
+const RegisterText = styled.span`
+    margin-right: 5px;
+    font-size: 14px;
+    color: #8e8e8e;
+`;
+
+const RegisterButton = styled(Link)`
+    border: none;
+    background-color: transparent;
+    color: rgb(0, 149, 246);
+    font-size: 14px;
+    text-decoration: none;
 `;
