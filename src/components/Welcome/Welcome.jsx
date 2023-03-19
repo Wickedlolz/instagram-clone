@@ -6,14 +6,16 @@ import styled from 'styled-components';
 const Welcome = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorText, setErrorText] = useState('');
     const { signIn } = useFirebaseContext();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setErrorText('');
 
         if (email.length === 0 || password.length === 0) {
-            alert('all fields are required!');
+            setErrorText('Please fill all fields.');
             return;
         }
 
@@ -21,7 +23,11 @@ const Welcome = () => {
             .then(() => {
                 navigate('/');
             })
-            .catch((error) => console.error(error));
+            .catch((error) => {
+                // Remove from message (Firebase:) and show it
+                const errorString = error.message.substring(9).trim();
+                setErrorText(errorString);
+            });
     };
 
     return (
@@ -78,10 +84,7 @@ const Welcome = () => {
                     <GoogleIcon className="fa-brands fa-google" />
                     Log in with Google
                 </GoogleButton>
-                <ErrorField>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Libero, repellendus!
-                </ErrorField>
+                {errorText.length > 0 && <ErrorField>{errorText}</ErrorField>}
                 <ForgotPassword>Forgot password?</ForgotPassword>
                 <RegisterContainer>
                     <RegisterText>Not registered?</RegisterText>
