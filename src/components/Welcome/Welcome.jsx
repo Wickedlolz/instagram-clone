@@ -7,7 +7,7 @@ const Welcome = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorText, setErrorText] = useState('');
-    const { signIn } = useFirebaseContext();
+    const { signIn, signInWithGoogle } = useFirebaseContext();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -25,6 +25,19 @@ const Welcome = () => {
             })
             .catch((error) => {
                 // Remove from message (Firebase:) and show it
+                const errorString = error.message.substring(9).trim();
+                setErrorText(errorString);
+            });
+    };
+
+    const handleSignInWithGoogle = (event) => {
+        setErrorText('');
+
+        signInWithGoogle()
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => {
                 const errorString = error.message.substring(9).trim();
                 setErrorText(errorString);
             });
@@ -66,12 +79,14 @@ const Welcome = () => {
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                         placeholder="Email"
+                        required
                     />
                     <Input
                         type="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         placeholder="Password"
+                        required
                     />
                     <Button>Log In</Button>
                 </Form>
@@ -80,7 +95,7 @@ const Welcome = () => {
                     <OrText>OR</OrText>
                     <SeparatorLine />
                 </SeparatorContainer>
-                <GoogleButton href="https://www.facebook.com/login">
+                <GoogleButton onClick={handleSignInWithGoogle}>
                     <GoogleIcon className="fa-brands fa-google" />
                     Log in with Google
                 </GoogleButton>
@@ -212,7 +227,7 @@ const OrText = styled.span`
     color: #8e8e8e;
 `;
 
-const GoogleButton = styled.a`
+const GoogleButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,7 +237,9 @@ const GoogleButton = styled.a`
     background-color: #385185;
     color: #fff;
     font-size: 14px;
-    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
 `;
 
 const GoogleIcon = styled.i`
