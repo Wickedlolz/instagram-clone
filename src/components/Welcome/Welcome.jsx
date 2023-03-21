@@ -24,7 +24,7 @@ const Welcome = () => {
                 navigate('/');
             })
             .catch((error) => {
-                // Remove from message (Firebase:) and show it
+                // Remove from error message (Firebase:) and show it
                 const errorString = error.message.substring(9).trim();
                 setErrorText(errorString);
             });
