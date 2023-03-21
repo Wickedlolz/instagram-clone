@@ -15,7 +15,7 @@ const Welcome = () => {
         setErrorText('');
 
         if (email.length === 0 || password.length === 0) {
-            setErrorText('Please fill all fields.');
+            setErrorText('All fields are required.');
             return;
         }
 
@@ -114,7 +114,7 @@ const Welcome = () => {
 
 export default Welcome;
 
-const Container = styled.div`
+const Container = styled.main`
     display: flex;
     flex-direction: row;
     height: 100vh;
