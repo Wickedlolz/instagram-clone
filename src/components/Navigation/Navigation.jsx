@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
+import { HiOutlineUserCircle, HiHome } from 'react-icons/hi2';
+import { RiSendPlaneFill } from 'react-icons/ri';
 
 const Navigation = () => {
     const navigate = useNavigate();
@@ -29,18 +31,12 @@ const Navigation = () => {
                 <SearchInput type="text" placeholder="Search" />
             </InputWrapper>
             <HeaderButtons>
-                <HeaderIcon
-                    src="https://static.thenounproject.com/png/3861763-200.png"
-                    alt="Direct Messages"
-                />
-                <HeaderIcon
-                    src="https://pixlok.com/wp-content/uploads/2021/12/Instagram-Home-Icon-n3fd2.png"
-                    alt="Activity Feed"
-                />
-                <HeaderIcon
-                    src="https://cdn2.iconfinder.com/data/icons/instagram-outline/19/11-512.png"
-                    alt="Profile"
+                <RiSendPlaneFill fontSize={24} />
+                <HiHome fontSize={24} />
+                <HiOutlineUserCircle
                     onClick={handleSignOut}
+                    cursor="pointer"
+                    fontSize={24}
                 />
             </HeaderButtons>
         </Header>
@@ -91,6 +87,7 @@ const SearchInput = styled.input`
 const HeaderButtons = styled.div`
     display: flex;
     align-items: center;
+    gap: 15px;
 `;
 
 const HeaderIcon = styled.img`
