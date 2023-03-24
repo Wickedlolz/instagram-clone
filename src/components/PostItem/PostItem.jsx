@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { HiOutlineHeart } from 'react-icons/hi';
 
 const PostItem = () => {
     return (
@@ -11,10 +12,7 @@ const PostItem = () => {
             <PostImage src="https://www.w3schools.com/w3images/nature.jpg" />
             <PostFooter>
                 <PostFooterLeft>
-                    <img
-                        src="https://www.w3schools.com/w3images/heart.png"
-                        alt="like"
-                    />
+                    <HiOutlineHeart fontSize={25} />
                     <PostLikes>10 likes</PostLikes>
                 </PostFooterLeft>
                 <PostCaption>This is a caption for the post.</PostCaption>
@@ -26,7 +24,7 @@ const PostItem = () => {
 export default PostItem;
 
 const Post = styled.div`
-    /* margin: 20px 0; */
+    margin-top: 15px;
     border: 1px solid #dbdbdb;
     border-radius: 3px;
     background-color: #fff;
@@ -74,7 +72,7 @@ const PostFooterLeft = styled.div`
 
 const PostLikes = styled.p`
     font-size: 14px;
-    margin: 0 8px 0 0;
+    margin: 0 8px 0 7px;
 `;
 
 const PostCaption = styled.p`
