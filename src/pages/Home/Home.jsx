@@ -1,13 +1,28 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Aside from '../../components/Aside/Aside';
+import NewPost from '../../components/NewPost/NewPost';
 import PostItem from '../../components/PostItem/PostItem';
 
 const Home = () => {
+    const [showNewPost, setShowNewPost] = useState(false);
+
+    const handleNewPostClick = () => {
+        setShowNewPost(true);
+    };
+
+    const handleNewPostClose = () => {
+        setShowNewPost(false);
+    };
+
     return (
         <PageWrapper>
             <Main>
                 <LeftSide>
+                    {showNewPost && <NewPost closeModal={handleNewPostClose} />}
+                    <NewPostButton onClick={handleNewPostClick}>
+                        New Post
+                    </NewPostButton>
                     <PostItem />
                     <PostItem />
                 </LeftSide>
@@ -41,4 +56,13 @@ const LeftSide = styled.div`
     flex-direction: column;
     width: 614px;
     margin-right: 30px;
+`;
+
+const NewPostButton = styled.button`
+    background-color: #0095f6;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 `;
