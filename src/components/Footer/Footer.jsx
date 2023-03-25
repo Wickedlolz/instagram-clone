@@ -19,9 +19,9 @@ const Footer = () => {
                 <LinkItem to="#">Locations</LinkItem>
             </LinksContainer>
             <SocialContainer>
-                <FaInstagram fontSize={25} />
-                <FaFacebook fontSize={25} />
-                <FaTwitter fontSize={25} />
+                <FaInstagram fontSize={20} />
+                <FaFacebook fontSize={20} />
+                <FaTwitter fontSize={20} />
             </SocialContainer>
             <TextContainer>
                 <Text>© 2023 Instagram from Facebook</Text>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Footer from '../Footer/Footer';
+
 const Aside = () => {
     return (
         <RightSide>
@@ -23,6 +25,7 @@ const Aside = () => {
                 </UserSuggestion>
             </Suggestions>
             <div>Advertisement</div>
+            <Footer />
         </RightSide>
     );
 };

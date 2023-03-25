@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 
+import Footer from '../Footer/Footer';
+
 const Welcome = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,19 +46,20 @@ const Welcome = () => {
     };
 
     return (
-        <Container>
-            <ImageContainer>
-                <ImageWrapper>
-                    <Image
-                        src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
-                        alt="Instagram phones"
-                    />
-                    <InstagramImages>
-                        <InstagramImage
-                            src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg"
-                            alt="Instagram screenshot 1"
+        <>
+            <Container>
+                <ImageContainer>
+                    <ImageWrapper>
+                        <Image
+                            src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
+                            alt="Instagram phones"
                         />
-                        {/* <InstagramImage
+                        <InstagramImages>
+                            <InstagramImage
+                                src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg"
+                                alt="Instagram screenshot 1"
+                            />
+                            {/* <InstagramImage
                             src="https://www.instagram.com/static/images/homepage/screenshot2.jpg/6f03eb85463c.jpg"
                             alt="Instagram screenshot 2"
                         />
@@ -68,47 +71,53 @@ const Welcome = () => {
                             src="https://www.instagram.com/static/images/homepage/screenshot4.jpg/842fe5699220.jpg"
                             alt="Instagram screenshot 4"
                         /> */}
-                    </InstagramImages>
-                </ImageWrapper>
-            </ImageContainer>
-            <FormContainer>
-                <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
-                <Form onSubmit={handleSubmit}>
-                    <Input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        placeholder="Email"
-                        required
-                    />
-                    <Input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        placeholder="Password"
-                        required
-                    />
-                    <Button>Log In</Button>
-                </Form>
-                <SeparatorContainer>
-                    <SeparatorLine />
-                    <OrText>OR</OrText>
-                    <SeparatorLine />
-                </SeparatorContainer>
-                <GoogleButton onClick={handleSignInWithGoogle}>
-                    <GoogleIcon className="fa-brands fa-google" />
-                    Log in with Google
-                </GoogleButton>
-                {errorText.length > 0 && <ErrorField>{errorText}</ErrorField>}
-                <ForgotPassword>Forgot password?</ForgotPassword>
-                <RegisterContainer>
-                    <RegisterText>Not registered?</RegisterText>
-                    <RegisterButton to="/accounts/register">
-                        Register
-                    </RegisterButton>
-                </RegisterContainer>
-            </FormContainer>
-        </Container>
+                        </InstagramImages>
+                    </ImageWrapper>
+                </ImageContainer>
+                <FormContainer>
+                    <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
+                    <Form onSubmit={handleSubmit}>
+                        <Input
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            placeholder="Email"
+                            required
+                        />
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                            placeholder="Password"
+                            required
+                        />
+                        <Button>Log In</Button>
+                    </Form>
+                    <SeparatorContainer>
+                        <SeparatorLine />
+                        <OrText>OR</OrText>
+                        <SeparatorLine />
+                    </SeparatorContainer>
+                    <GoogleButton onClick={handleSignInWithGoogle}>
+                        <GoogleIcon className="fa-brands fa-google" />
+                        Log in with Google
+                    </GoogleButton>
+                    {errorText.length > 0 && (
+                        <ErrorField>{errorText}</ErrorField>
+                    )}
+                    <ForgotPassword>Forgot password?</ForgotPassword>
+                    <RegisterContainer>
+                        <RegisterText>Not registered?</RegisterText>
+                        <RegisterButton to="/accounts/register">
+                            Register
+                        </RegisterButton>
+                    </RegisterContainer>
+                </FormContainer>
+            </Container>
+            <Footer />
+        </>
     );
 };
 
