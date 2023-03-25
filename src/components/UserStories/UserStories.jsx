@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
 
 const UserStories = () => {
     const stories = [
@@ -66,14 +67,35 @@ const UserStories = () => {
         // Add more stories here...
     ];
 
+    const [scrollLeft, setScrollLeft] = useState(0);
+    const storiesRef = useRef(null);
+
+    const handleScrollLeft = () => {
+        setScrollLeft(scrollLeft - 200);
+        storiesRef.current.scrollLeft -= 200;
+    };
+
+    const handleScrollRight = () => {
+        setScrollLeft(scrollLeft + 200);
+        storiesRef.current.scrollLeft += 200;
+    };
+
     return (
         <StoriesContainer>
-            {stories.map((story) => (
-                <Story key={story.id}>
-                    <StoryImage src={story.image} />
-                    <StoryName>{story.name}</StoryName>
-                </Story>
-            ))}
+            <ArrowButton onClick={handleScrollLeft}>
+                <HiArrowCircleLeft />
+            </ArrowButton>
+            <StoriesWrapper ref={storiesRef}>
+                {stories.map((story) => (
+                    <Story key={story.id}>
+                        <StoryImage src={story.image} />
+                        <StoryName>{story.name}</StoryName>
+                    </Story>
+                ))}
+            </StoriesWrapper>
+            <ArrowButton onClick={handleScrollRight}>
+                <HiArrowCircleRight />
+            </ArrowButton>
         </StoriesContainer>
     );
 };
@@ -81,17 +103,17 @@ const UserStories = () => {
 export default UserStories;
 
 const StoriesContainer = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
     overflow-x: auto;
-    -ms-overflow-style: none; /* hide scrollbar on IE and Edge */
-    // hide scrollbar on Firefox
+    -ms-overflow-style: none;
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
-        display: none; /* hide scrollbar on Chrome, Safari, and Opera */
+        display: none;
     }
 `;
 
@@ -113,4 +135,41 @@ const StoryImage = styled.img`
 
 const StoryName = styled.span`
     font-size: 12px;
+`;
+
+const ArrowButton = styled.button`
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 32px;
+    color: #999;
+    transition: color 0.2s;
+
+    &:hover {
+        color: #333;
+    }
+
+    &:first-of-type {
+        left: 0;
+    }
+
+    &:last-of-type {
+        right: 0;
+    }
+`;
+
+const StoriesWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    -ms-overflow-style: none; /* hide scrollbar on IE and Edge */
+    scrollbar-width: none; /* hide scrollbar on Firefox */
+
+    &::-webkit-scrollbar {
+        display: none; /* hide scrollbar on Chrome, Safari, and Opera */
+    }
 `;
