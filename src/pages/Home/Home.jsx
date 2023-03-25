@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Aside from '../../components/Aside/Aside';
 import NewPost from '../../components/NewPost/NewPost';
 import PostItem from '../../components/PostItem/PostItem';
+import UserStories from '../../components/UserStories/UserStories';
 
 const Home = () => {
     const [showNewPost, setShowNewPost] = useState(false);
@@ -19,6 +20,7 @@ const Home = () => {
         <PageWrapper>
             <Main>
                 <LeftSide>
+                    <UserStories />
                     {showNewPost && <NewPost closeModal={handleNewPostClose} />}
                     <NewPostButton onClick={handleNewPostClick}>
                         New Post
@@ -65,4 +67,5 @@ const NewPostButton = styled.button`
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
 `;
