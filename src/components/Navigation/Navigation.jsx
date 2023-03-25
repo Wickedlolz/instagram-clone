@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 import { HiOutlineUserCircle, HiHome } from 'react-icons/hi2';
 import { RiSendPlaneFill } from 'react-icons/ri';
+import { HiOutlinePlusCircle } from 'react-icons/hi';
 
-const Navigation = () => {
+const Navigation = ({ handleNewPostClick }) => {
     const navigate = useNavigate();
     const { logOut } = useFirebaseContext();
+    const [showNewPost, setShowNewPost] = useState(false);
 
     const handleSignOut = (event) => {
         logOut()
@@ -33,6 +35,11 @@ const Navigation = () => {
             <HeaderButtons>
                 <RiSendPlaneFill fontSize={24} />
                 <HiHome fontSize={24} />
+                <HiOutlinePlusCircle
+                    cursor="pointer"
+                    onClick={handleNewPostClick}
+                    fontSize={24}
+                />
                 <HiOutlineUserCircle
                     onClick={handleSignOut}
                     cursor="pointer"

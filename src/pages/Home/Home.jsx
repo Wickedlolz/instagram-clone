@@ -1,30 +1,15 @@
-import { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Aside from '../../components/Aside/Aside';
-import NewPost from '../../components/NewPost/NewPost';
 import PostItem from '../../components/PostItem/PostItem';
 import UserStories from '../../components/UserStories/UserStories';
 
 const Home = () => {
-    const [showNewPost, setShowNewPost] = useState(false);
-
-    const handleNewPostClick = () => {
-        setShowNewPost(true);
-    };
-
-    const handleNewPostClose = () => {
-        setShowNewPost(false);
-    };
-
     return (
         <PageWrapper>
             <Main>
                 <LeftSide>
                     <UserStories />
-                    {showNewPost && <NewPost closeModal={handleNewPostClose} />}
-                    <NewPostButton onClick={handleNewPostClick}>
-                        New Post
-                    </NewPostButton>
                     <PostItem />
                     <PostItem />
                 </LeftSide>
