@@ -1,36 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { db } from '../../firebase-config';
-import { getDocs, collection } from 'firebase/firestore';
+import React from 'react';
+import { usePostContext } from '../../contexts/postContext';
 import styled from 'styled-components';
 import Aside from '../../components/Aside/Aside';
 import PostItem from '../../components/PostItem/PostItem';
 import UserStories from '../../components/UserStories/UserStories';
 
 const Home = () => {
-    const [posts, setPosts] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const postsCollectionRef = collection(db, 'posts');
-
-    useEffect(() => {
-        const getAllPosts = async () => {
-            setIsLoading(true);
-            try {
-                const data = await getDocs(postsCollectionRef);
-                const filteredPosts = data.docs.map((doc) => ({
-                    ...doc.data(),
-                    id: doc.id,
-                }));
-
-                setPosts(filteredPosts);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        getAllPosts();
-    }, []);
+    const { posts, isLoading } = usePostContext();
 
     return (
         <PageWrapper>
