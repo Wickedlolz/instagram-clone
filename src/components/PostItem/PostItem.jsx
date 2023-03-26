@@ -6,16 +6,25 @@ const PostItem = ({ post }) => {
     return (
         <Post>
             <PostHeader>
-                <PostAvatar src="https://www.w3schools.com/w3images/avatar2.png" />
-                <PostUsername>username</PostUsername>
+                <PostAvatar
+                    src={
+                        post?.ownerPhoto ||
+                        'https://www.w3schools.com/w3images/avatar2.png'
+                    }
+                />
+                <PostUsername>{post?.owner}</PostUsername>
             </PostHeader>
-            <PostImage src="https://www.w3schools.com/w3images/nature.jpg" />
+            <PostImage
+                src={post?.imageUrl}
+                loading="lazy"
+                alt={post?.caption}
+            />
             <PostFooter>
                 <PostFooterLeft>
                     <HiOutlineHeart fontSize={25} />
-                    <PostLikes>10 likes</PostLikes>
+                    <PostLikes>{post?.likes} likes</PostLikes>
                 </PostFooterLeft>
-                <PostCaption>This is a caption for the post.</PostCaption>
+                <PostCaption>{post?.caption}</PostCaption>
             </PostFooter>
         </Post>
     );
@@ -56,6 +65,9 @@ const PostUsername = styled.h4`
 
 const PostImage = styled.img`
     width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center center;
 `;
 
 const PostFooter = styled.div`

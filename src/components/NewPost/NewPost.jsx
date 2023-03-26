@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { storage } from '../../firebase-config';
+import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { storage, db } from '../../firebase-config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { setDoc, doc } from 'firebase/firestore';
 import { v4 } from 'uuid';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const NewPost = ({ closeModal }) => {
+    const { user } = useFirebaseContext();
     const [imageUpload, setImageUpload] = useState(null);
     const [caption, setCaption] = useState('');
     const [isUploading, setIsUploading] = useState(false);
+
+    console.log(user);
 
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
@@ -26,7 +31,14 @@ const NewPost = ({ closeModal }) => {
             const imageRef = ref(storage, `/images/${imageUpload.name + v4()}`);
             const snapshot = await uploadBytes(imageRef, imageUpload);
             const imageUrl = await getDownloadURL(snapshot.ref);
-            console.log(imageUrl);
+            await setDoc(doc(db, 'posts', v4()), {
+                imageUrl,
+                caption,
+                owner: user.email,
+                ownerPhoto: user.photoUrl,
+                likes: 0,
+            });
+
             closeModal();
             setIsUploading(false);
         } catch (error) {
