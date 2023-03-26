@@ -1,22 +1,37 @@
 import { useState } from 'react';
+import { storage } from '../../firebase-config';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const NewPost = ({ closeModal }) => {
+    const [imageUpload, setImageUpload] = useState(null);
     const [caption, setCaption] = useState('');
-    const [image, setImage] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
     };
 
-    const handleImageChange = (event) => {
-        setImage(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // handle form submission
+        setIsUploading(true);
+
+        if (imageUpload === null) {
+            return;
+        }
+
+        try {
+            const imageRef = ref(storage, `/images/${imageUpload.name + v4()}`);
+            const snapshot = await uploadBytes(imageRef, imageUpload);
+            const imageUrl = await getDownloadURL(snapshot.ref);
+            console.log(imageUrl);
+            closeModal();
+            setIsUploading(false);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -28,12 +43,10 @@ const NewPost = ({ closeModal }) => {
                 </CloseButton>
             </Header>
             <Form onSubmit={handleSubmit}>
-                <ImagePreview src={image} />
+                {/* <ImagePreview src={image} /> */}
                 <ImageInput
-                    type="text"
-                    placeholder="Image URL"
-                    value={image}
-                    onChange={handleImageChange}
+                    type="file"
+                    onChange={(event) => setImageUpload(event.target.files[0])}
                 />
                 <CaptionInput
                     type="text"
@@ -41,7 +54,9 @@ const NewPost = ({ closeModal }) => {
                     value={caption}
                     onChange={handleCaptionChange}
                 />
-                <Button type="submit">Post</Button>
+                <Button type="submit" disabled={isUploading}>
+                    Post
+                </Button>
             </Form>
         </Container>
     );
@@ -126,4 +141,9 @@ const Button = styled.button`
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    &:disabled {
+        background-color: #9fcdeb;
+        cursor: not-allowed;
+    }
 `;

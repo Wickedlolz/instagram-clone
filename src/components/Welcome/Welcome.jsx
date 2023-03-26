@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
+import { FaGoogle } from 'react-icons/fa';
 
 import Footer from '../Footer/Footer';
 
@@ -100,10 +101,10 @@ const Welcome = () => {
                         <OrText>OR</OrText>
                         <SeparatorLine />
                     </SeparatorContainer>
-                    <GoogleButton onClick={handleSignInWithGoogle}>
-                        <GoogleIcon className="fa-brands fa-google" />
+                    <ProviderButton onClick={handleSignInWithGoogle}>
+                        <FaGoogle />
                         Log in with Google
-                    </GoogleButton>
+                    </ProviderButton>
                     {errorText.length > 0 && (
                         <ErrorField>{errorText}</ErrorField>
                     )}
@@ -236,10 +237,11 @@ const OrText = styled.span`
     color: #8e8e8e;
 `;
 
-const GoogleButton = styled.button`
+const ProviderButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     height: 30px;
     padding: 0 10px;
     border-radius: 5px;
@@ -249,10 +251,6 @@ const GoogleButton = styled.button`
     border: none;
     outline: none;
     cursor: pointer;
-`;
-
-const GoogleIcon = styled.i`
-    margin-right: 15px;
 `;
 
 const RegisterContainer = styled.div`

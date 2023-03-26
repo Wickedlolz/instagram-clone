@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
 
-const PostItem = () => {
+const PostItem = ({ post }) => {
     return (
         <Post>
             <PostHeader>
@@ -59,8 +59,8 @@ const PostImage = styled.img`
 `;
 
 const PostFooter = styled.div`
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     padding: 16px;
 `;
 
@@ -71,11 +71,13 @@ const PostFooterLeft = styled.div`
 `;
 
 const PostLikes = styled.p`
-    font-size: 14px;
+    /* font-size: 16px; */
+    vertical-align: middle;
     margin: 0 8px 0 7px;
+    /* display: block; */
 `;
 
 const PostCaption = styled.p`
     font-size: 14px;
-    margin: 0;
+    margin: 10px 0 0 0;
 `;
