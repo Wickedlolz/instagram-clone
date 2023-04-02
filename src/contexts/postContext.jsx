@@ -1,12 +1,11 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { db } from '../firebase-config';
-import { getDocs, collection, serverTimestamp } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 export const PostContext = createContext({});
 
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState();
-    const [reloadPosts, setReloadPosts] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const postsCollectionRef = collection(db, 'posts');
 
@@ -30,16 +29,12 @@ export const PostProvider = ({ children }) => {
         };
 
         getAllPosts();
-    }, [reloadPosts]);
+    }, []);
 
-    const addPosts = (posts) => setPosts(posts);
-
-    const reloadConent = () => setReloadPosts((state) => !state);
+    const addPost = (post) => setPosts((state) => [post, ...state]);
 
     return (
-        <PostContext.Provider
-            value={{ posts, addPosts, reloadConent, isLoading }}
-        >
+        <PostContext.Provider value={{ posts, addPost, isLoading }}>
             {children}
         </PostContext.Provider>
     );

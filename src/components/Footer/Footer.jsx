@@ -24,7 +24,7 @@ const Footer = () => {
                 <FaTwitter fontSize={20} />
             </SocialContainer>
             <TextContainer>
-                <Text>© 2023 Instagram from Facebook</Text>
+                <Text>© 2023 Instagram Clone from Viktor Dimitrov</Text>
             </TextContainer>
         </Container>
     );

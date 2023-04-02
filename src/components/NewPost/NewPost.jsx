@@ -13,7 +13,7 @@ const NewPost = ({ closeModal }) => {
     const [imageUpload, setImageUpload] = useState(null);
     const [caption, setCaption] = useState('');
     const [isUploading, setIsUploading] = useState(false);
-    const { reloadConent } = usePostContext();
+    const { addPost } = usePostContext();
 
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
@@ -31,16 +31,17 @@ const NewPost = ({ closeModal }) => {
             const imageRef = ref(storage, `/images/${imageUpload.name + v4()}`);
             const snapshot = await uploadBytes(imageRef, imageUpload);
             const imageUrl = await getDownloadURL(snapshot.ref);
-            const createdPost = await addDoc(collection(db, 'posts'), {
+            const post = {
                 imageUrl,
                 caption,
                 owner: user.email,
                 ownerPhoto: user.photoURL || '',
                 likes: 0,
                 createdAt: new Date().toDateString(),
-            });
+            };
+            await addDoc(collection(db, 'posts'), post);
+            addPost(post);
             closeModal();
-            reloadConent();
             setIsUploading(false);
         } catch (error) {
             console.error(error);
