@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { storage, db } from '../../firebase-config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { addDoc, collection, getDoc } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { usePostContext } from '../../contexts/postContext';
 import { v4 } from 'uuid';
 import styled from 'styled-components';
@@ -35,8 +35,9 @@ const NewPost = ({ closeModal }) => {
                 imageUrl,
                 caption,
                 owner: user.email,
-                ownerPhoto: user.photoUrl || '',
+                ownerPhoto: user.photoURL || '',
                 likes: 0,
+                createdAt: new Date().toDateString(),
             });
             closeModal();
             reloadConent();

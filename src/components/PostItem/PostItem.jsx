@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
+import { FaRegComment, FaRegPaperPlane } from 'react-icons/fa';
 
 const PostItem = ({ post }) => {
     return (
@@ -21,10 +22,13 @@ const PostItem = ({ post }) => {
             />
             <PostFooter>
                 <PostFooterLeft>
-                    <HiOutlineHeart fontSize={25} />
-                    <PostLikes>{post?.likes} likes</PostLikes>
+                    <HiOutlineHeart fontSize={30} />
+                    <FaRegComment fontSize={24} />
+                    <FaRegPaperPlane fontSize={24} />
                 </PostFooterLeft>
+                <PostLikes>{post?.likes} likes</PostLikes>
                 <PostCaption>{post?.caption}</PostCaption>
+                <PostCaption>{post?.createdAt || 'No Date'}</PostCaption>
             </PostFooter>
         </Post>
     );
@@ -80,13 +84,14 @@ const PostFooterLeft = styled.div`
     display: flex;
     align-items: center;
     margin-right: 16px;
+    gap: 10px;
 `;
 
 const PostLikes = styled.p`
-    /* font-size: 16px; */
+    font-size: 18px;
+    font-weight: bold;
     vertical-align: middle;
-    margin: 0 8px 0 7px;
-    /* display: block; */
+    margin: 9px 8px 0 7px;
 `;
 
 const PostCaption = styled.p`

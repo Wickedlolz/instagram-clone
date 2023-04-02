@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { db } from '../firebase-config';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, serverTimestamp } from 'firebase/firestore';
 
 export const PostContext = createContext({});
 
@@ -21,7 +21,6 @@ export const PostProvider = ({ children }) => {
                 }));
 
                 //TODO!: add date of creating and sort by date
-
                 setPosts(filteredPosts);
             } catch (error) {
                 console.error(error);
