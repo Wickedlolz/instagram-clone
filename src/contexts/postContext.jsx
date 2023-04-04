@@ -1,11 +1,20 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, {
+    useState,
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+} from 'react';
 import { db } from '../firebase-config';
 import { getDocs, collection } from 'firebase/firestore';
+import postReducer from '../reducers/postReducer';
 
 export const PostContext = createContext({});
 
+const initialState = [];
+
 export const PostProvider = ({ children }) => {
-    const [posts, setPosts] = useState();
+    const [state, dispatch] = useReducer(postReducer, initialState);
     const [isLoading, setIsLoading] = useState(true);
     const postsCollectionRef = collection(db, 'posts');
 
@@ -20,21 +29,23 @@ export const PostProvider = ({ children }) => {
                 }));
 
                 //TODO!: add date of creating and sort by date
-                setPosts(filteredPosts);
+                dispatch({
+                    type: 'LOAD_POSTS',
+                    payload: { posts: filteredPosts },
+                });
             } catch (error) {
                 console.error(error);
             } finally {
                 setIsLoading(false);
             }
         };
-
         getAllPosts();
     }, []);
 
-    const addPost = (post) => setPosts((state) => [post, ...state]);
+    const addPost = (post) => dispatch({ type: 'ADD_POST', payload: { post } });
 
     return (
-        <PostContext.Provider value={{ posts, addPost, isLoading }}>
+        <PostContext.Provider value={{ posts: state, addPost, isLoading }}>
             {children}
         </PostContext.Provider>
     );

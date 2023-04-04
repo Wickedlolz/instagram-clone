@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePostContext } from '../../contexts/postContext';
+import { usePostContext } from '../../contexts/PostContext';
 import styled from 'styled-components';
 import Aside from '../../components/Aside/Aside';
 import PostItem from '../../components/PostItem/PostItem';
@@ -19,8 +19,6 @@ const Home = () => {
                         posts.map((post) => (
                             <PostItem key={post.id} post={post} />
                         ))}
-                    {/* <PostItem />
-                    <PostItem /> */}
                 </LeftSide>
                 <Aside />
             </Main>

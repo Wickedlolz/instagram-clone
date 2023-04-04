@@ -3,7 +3,7 @@ import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { storage, db } from '../../firebase-config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection } from 'firebase/firestore';
-import { usePostContext } from '../../contexts/postContext';
+import { usePostContext } from '../../contexts/PostContext';
 import { v4 } from 'uuid';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
