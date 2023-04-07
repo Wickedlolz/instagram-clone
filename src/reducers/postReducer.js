@@ -6,6 +6,10 @@ const postReducer = (state, action) => {
         case 'ADD_POST':
             const { post } = action.payload;
             return [post, ...state];
+        default:
+            return {
+                ...state,
+            };
     }
 };
 
