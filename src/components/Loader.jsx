@@ -23,6 +23,7 @@ const LoaderContainer = styled.div`
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
+    backdrop-filter: blur(10px);
 `;
 
 const spinnerAnimation = keyframes`
