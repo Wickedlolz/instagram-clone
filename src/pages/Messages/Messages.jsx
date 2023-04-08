@@ -1,23 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 
 const Messages = () => {
+    const { user } = useFirebaseContext();
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/comments')
             .then((res) => res.json())
-            .then((result) => setMessages(result));
+            .then((result) => {
+                setMessages(result);
+                scrollToBottom();
+            });
     }, []);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            if (inputValue.length > 0) {
+                handleSendClick();
+            }
+        }
+    };
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
 
     const handleSendClick = () => {
-        setMessages([...messages, { body: inputValue, sender: true }]);
-        setInputValue('');
+        if (inputValue.length > 0) {
+            setMessages((state) => [
+                ...state,
+                {
+                    body: inputValue + user.email,
+                    name: user.email,
+                    sender: true,
+                },
+            ]);
+            setInputValue('');
+            scrollToBottom();
+        }
     };
 
     return (
@@ -27,8 +55,12 @@ const Messages = () => {
             </ChatHeader>
             <ChatList>
                 {messages.map((message, index) => (
-                    <ChatItem key={message.id} sender={message.id % 2 !== 0}>
-                        {message.name ? (
+                    <ChatItem
+                        key={index}
+                        sender={message.sender}
+                        ref={messagesEndRef}
+                    >
+                        {message.sender ? (
                             <>
                                 <ChatAvatar
                                     src="https://www.w3schools.com/w3images/avatar2.png"
@@ -38,11 +70,11 @@ const Messages = () => {
                             </>
                         ) : (
                             <>
-                                <ChatContent>{message.body}</ChatContent>
                                 <ChatAvatar
                                     src="https://www.w3schools.com/w3images/avatar2.png"
                                     alt="User Avatar"
                                 />
+                                <ChatContent>{message.body}</ChatContent>
                             </>
                         )}
                     </ChatItem>
@@ -54,6 +86,7 @@ const Messages = () => {
                     placeholder="Type your message..."
                     value={inputValue}
                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
                 />
                 <ChatSendButton onClick={handleSendClick}>Send</ChatSendButton>
             </ChatInputContainer>
@@ -68,7 +101,6 @@ const ChatContainer = styled.div`
     flex-direction: column;
     height: 100vh;
     background-color: #fafafa;
-    width: 70%;
 `;
 
 const ChatHeader = styled.div`
