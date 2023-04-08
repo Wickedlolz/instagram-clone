@@ -9,10 +9,13 @@ import {
     signInWithPopup,
 } from 'firebase/auth';
 
+import Loader from '../components/Loader';
+
 export const FirebaseContext = createContext();
 
 export const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const signUp = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
@@ -25,8 +28,10 @@ export const FirebaseProvider = ({ children }) => {
     const logOut = () => signOut(auth);
 
     useEffect(() => {
+        setIsLoading(true);
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
+            setIsLoading(false);
         });
 
         return () => unsubscribe();
@@ -36,7 +41,8 @@ export const FirebaseProvider = ({ children }) => {
         <FirebaseContext.Provider
             value={{ user, signUp, signIn, signInWithGoogle, logOut }}
         >
-            {children ? children : <Outlet />}
+            {isLoading && <Loader />}
+            {!isLoading && children ? children : <Outlet />}
         </FirebaseContext.Provider>
     );
 };
