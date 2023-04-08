@@ -1,9 +1,11 @@
 import React from 'react';
-import { usePostContext } from '../../contexts/PostContext';
+import { usePostContext } from '../contexts/PostContext';
 import styled from 'styled-components';
-import Aside from '../../components/Aside/Aside';
-import PostItem from '../../components/PostItem/PostItem';
-import UserStories from '../../components/UserStories/UserStories';
+
+import Aside from '../components/Aside';
+import PostItem from '../components/PostItem';
+import UserStories from '../components/UserStories';
+import Loader from '../components/Loader';
 
 const Home = () => {
     const { posts, isLoading } = usePostContext();
@@ -12,7 +14,7 @@ const Home = () => {
         <>
             <LeftSide>
                 <UserStories />
-                {isLoading && <p>Loading&hellip;</p>}
+                {isLoading && <Loader />}
                 {!isLoading &&
                     posts &&
                     posts.map((post) => <PostItem key={post.id} post={post} />)}

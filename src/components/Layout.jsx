@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
 
-import Welcome from '../Welcome/Welcome';
-import Navigation from '../Navigation/Navigation';
-import NewPost from '../NewPost/NewPost';
+import Welcome from './Welcome';
+import Navigation from './Navigation';
+import NewPost from './NewPost';
 
 const Layout = ({ children }) => {
     const { user } = useFirebaseContext();
@@ -49,5 +49,5 @@ const Main = styled.div`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    margin-top: 30px;
+    /* margin-top: 30px; */
 `;

@@ -1,25 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
+import { db } from '../firebase-config';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import styled from 'styled-components';
+
+import Loader from '../components/Loader';
 
 const Messages = () => {
     const { user } = useFirebaseContext();
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const messagesEndRef = useRef(null);
+    const messagesRef = collection(db, 'messages');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         fetch('https://jsonplaceholder.typicode.com/comments')
             .then((res) => res.json())
             .then((result) => {
+                setIsLoading(false);
                 setMessages(result);
-                scrollToBottom();
+                // scrollToBottom();
             });
+
+        // const queryMessages = query(messagesRef, where("room", "==", room))
+        // const queryMessages = query(messagesRef);
+        // const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+        //     let messages = [];
+        //     snapshot.forEach((doc) => {
+        //         messages.push({ ...doc.data(), id: doc.id});
+        //     });
+
+        //     setMessages(messages);
+        // });
+
+        // return () => unsubscribe();
     }, []);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+    useEffect(() => {
+        messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }, [messages]);
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -44,21 +65,21 @@ const Messages = () => {
                 },
             ]);
             setInputValue('');
-            scrollToBottom();
         }
     };
 
     return (
         <ChatContainer>
+            {isLoading && <Loader />}
             <ChatHeader>
                 <ChatTitle>Chat</ChatTitle>
             </ChatHeader>
-            <ChatList>
+            <ChatList ref={messagesEndRef}>
                 {messages.map((message, index) => (
                     <ChatItem
                         key={index}
                         sender={message.sender}
-                        ref={messagesEndRef}
+                        // ref={messagesEndRef}
                     >
                         {message.sender ? (
                             <>
@@ -99,7 +120,7 @@ export default Messages;
 const ChatContainer = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     background-color: #fafafa;
 `;
 

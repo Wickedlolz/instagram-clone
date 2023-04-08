@@ -2,11 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import { FirebaseProvider } from './contexts/FirebaseContext';
 import { PostProvider } from './contexts/PostContext';
 
-import Home from './pages/Home/Home';
-import Layout from './components/Layout/Layout';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Messages from './pages/Messages';
+import NotFound from './pages/NotFound';
 
 import './App.css';
-import Messages from './pages/Messages/Messages';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/messages" element={<Messages />} />
+                        <Route path="/*" element={<NotFound />} />
                     </Routes>
                 </Layout>
             </PostProvider>

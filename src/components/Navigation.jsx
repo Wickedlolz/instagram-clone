@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
 import { HiOutlineUserCircle, HiHome } from 'react-icons/hi2';
 import { RiSendPlaneFill } from 'react-icons/ri';

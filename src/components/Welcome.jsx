@@ -1,20 +1,23 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
 import { FaGoogle } from 'react-icons/fa';
 
-import Footer from '../Footer/Footer';
+import Loader from './Loader';
+import Footer from './Footer';
 
 const Welcome = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorText, setErrorText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { signIn, signInWithGoogle } = useFirebaseContext();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         setErrorText('');
 
         if (email.length === 0 || password.length === 0) {
@@ -24,9 +27,11 @@ const Welcome = () => {
 
         signIn(email, password)
             .then(() => {
+                setIsLoading(false);
                 navigate('/');
             })
             .catch((error) => {
+                setIsLoading(false);
                 // Remove from error message (Firebase:) and show it
                 const errorString = error.message.substring(9).trim();
                 setErrorText(errorString);
@@ -34,13 +39,16 @@ const Welcome = () => {
     };
 
     const handleSignInWithGoogle = (event) => {
+        setIsLoading(true);
         setErrorText('');
 
         signInWithGoogle()
             .then(() => {
+                setIsLoading(false);
                 navigate('/');
             })
             .catch((error) => {
+                setIsLoading(false);
                 const errorString = error.message.substring(9).trim();
                 setErrorText(errorString);
             });
@@ -49,6 +57,7 @@ const Welcome = () => {
     return (
         <>
             <Container>
+                {isLoading && <Loader />}
                 <ImageContainer>
                     <ImageWrapper>
                         <Image
