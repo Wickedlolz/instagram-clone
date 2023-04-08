@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import styled from 'styled-components';
 import { HiOutlineUserCircle, HiHome } from 'react-icons/hi2';
@@ -9,12 +9,11 @@ import { HiOutlinePlusCircle } from 'react-icons/hi';
 const Navigation = ({ handleNewPostClick }) => {
     const navigate = useNavigate();
     const { logOut } = useFirebaseContext();
-    const [showNewPost, setShowNewPost] = useState(false);
 
     const handleSignOut = (event) => {
         logOut()
             .then(() => {
-                navigate('/');
+                navigate('/', { replace: true });
             })
             .catch((error) => console.error(error));
     };
@@ -33,8 +32,12 @@ const Navigation = ({ handleNewPostClick }) => {
                 <SearchInput type="text" placeholder="Search" />
             </InputWrapper>
             <HeaderButtons>
-                <RiSendPlaneFill fontSize={24} />
-                <HiHome fontSize={24} />
+                <HeaderLink to="/messages">
+                    <RiSendPlaneFill fontSize={24} />
+                </HeaderLink>
+                <HeaderLink to="/">
+                    <HiHome fontSize={24} />
+                </HeaderLink>
                 <HiOutlinePlusCircle
                     cursor="pointer"
                     onClick={handleNewPostClick}
@@ -95,6 +98,11 @@ const HeaderButtons = styled.div`
     display: flex;
     align-items: center;
     gap: 15px;
+`;
+
+const HeaderLink = styled(Link)`
+    color: #000;
+    height: 23px;
 `;
 
 const HeaderIcon = styled.img`

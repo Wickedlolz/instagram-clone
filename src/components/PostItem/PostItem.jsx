@@ -38,9 +38,9 @@ export default PostItem;
 
 const Post = styled.div`
     margin-top: 15px;
-    border: 1px solid #dbdbdb;
+    border: 1px solid var(--clr-primary-light-gray);
     border-radius: 3px;
-    background-color: #fff;
+    background-color: var(--clr-primary-white);
     max-width: 600px;
 
     &:not(:first-of-type) {

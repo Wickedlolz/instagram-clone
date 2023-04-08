@@ -9,41 +9,20 @@ const Home = () => {
     const { posts, isLoading } = usePostContext();
 
     return (
-        <PageWrapper>
-            <Main>
-                <LeftSide>
-                    <UserStories />
-                    {isLoading && <p>Loading&hellip;</p>}
-                    {!isLoading &&
-                        posts &&
-                        posts.map((post) => (
-                            <PostItem key={post.id} post={post} />
-                        ))}
-                </LeftSide>
-                <Aside />
-            </Main>
-        </PageWrapper>
+        <>
+            <LeftSide>
+                <UserStories />
+                {isLoading && <p>Loading&hellip;</p>}
+                {!isLoading &&
+                    posts &&
+                    posts.map((post) => <PostItem key={post.id} post={post} />)}
+            </LeftSide>
+            <Aside />
+        </>
     );
 };
 
 export default Home;
-
-const PageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 935px;
-    margin: 0 auto;
-`;
-
-const Main = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    margin-top: 30px;
-`;
 
 const LeftSide = styled.div`
     display: flex;

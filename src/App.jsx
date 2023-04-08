@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import Layout from './components/Layout/Layout';
 
 import './App.css';
+import Messages from './pages/Messages/Messages';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/messages" element={<Messages />} />
                     </Routes>
                 </Layout>
             </PostProvider>

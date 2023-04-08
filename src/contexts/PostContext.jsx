@@ -8,12 +8,14 @@ import React, {
 import { db } from '../firebase-config';
 import { getDocs, collection } from 'firebase/firestore';
 import postReducer from '../reducers/postReducer';
+import { useFirebaseContext } from './FirebaseContext';
 
 export const PostContext = createContext({});
 
 const initialState = [];
 
 export const PostProvider = ({ children }) => {
+    const { user } = useFirebaseContext();
     const [state, dispatch] = useReducer(postReducer, initialState);
     const [isLoading, setIsLoading] = useState(true);
     const postsCollectionRef = collection(db, 'posts');
@@ -39,8 +41,11 @@ export const PostProvider = ({ children }) => {
                 setIsLoading(false);
             }
         };
-        getAllPosts();
-    }, []);
+
+        if (user) {
+            getAllPosts();
+        }
+    }, [user]);
 
     const addPost = (post) => dispatch({ type: 'ADD_POST', payload: { post } });
 

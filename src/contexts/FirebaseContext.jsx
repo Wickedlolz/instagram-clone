@@ -12,7 +12,7 @@ import {
 export const FirebaseContext = createContext();
 
 export const FirebaseProvider = ({ children }) => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
 
     const signUp = (email, password) =>
         createUserWithEmailAndPassword(auth, email, password);
