@@ -11,12 +11,19 @@ import { AiOutlineClose } from 'react-icons/ai';
 const NewPost = ({ closeModal }) => {
     const { user } = useFirebaseContext();
     const [imageUpload, setImageUpload] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
     const [caption, setCaption] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const { addPost } = usePostContext();
 
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
+    };
+
+    const handleImageUploadChange = (event) => {
+        setImageUpload(event.target.files[0]);
+        const url = URL.createObjectURL(event.target.files[0]);
+        setImagePreview(url);
     };
 
     const handleSubmit = async (event) => {
@@ -57,11 +64,8 @@ const NewPost = ({ closeModal }) => {
                 </CloseButton>
             </Header>
             <Form onSubmit={handleSubmit}>
-                {/* <ImagePreview src={image} /> */}
-                <ImageInput
-                    type="file"
-                    onChange={(event) => setImageUpload(event.target.files[0])}
-                />
+                {imagePreview && <ImagePreview src={imagePreview} />}
+                <ImageInput type="file" onChange={handleImageUploadChange} />
                 <CaptionInput
                     type="text"
                     placeholder="Write a caption..."
