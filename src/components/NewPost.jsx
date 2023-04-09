@@ -34,6 +34,7 @@ const NewPost = ({ closeModal }) => {
             return;
         }
 
+        // TODO: viktor - change likes to be array wich will contains user id who like the post
         try {
             const imageRef = ref(storage, `/images/${imageUpload.name + v4()}`);
             const snapshot = await uploadBytes(imageRef, imageUpload);
