@@ -24,9 +24,6 @@ const UserProfile = () => {
     }, []);
 
     const handleLogoutClick = () => {
-        // Implement logout functionality here
-        console.log('Logging out...');
-
         logOut()
             .then(() => {
                 navigate('/', { replace: true });
