@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
 
 const UserProfile = () => {
@@ -6,6 +8,8 @@ const UserProfile = () => {
     const [userPhotos, setUserPhotos] = useState([]);
     const [following, setFollowing] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const navigate = useNavigate();
+    const { logOut } = useFirebaseContext();
 
     useEffect(() => {
         // Fetch user data
@@ -22,6 +26,12 @@ const UserProfile = () => {
     const handleLogoutClick = () => {
         // Implement logout functionality here
         console.log('Logging out...');
+
+        logOut()
+            .then(() => {
+                navigate('/', { replace: true });
+            })
+            .catch((error) => console.error(error));
     };
 
     const handleFollowClick = () => {
@@ -29,7 +39,6 @@ const UserProfile = () => {
     };
 
     const handleImageClick = (image) => {
-        console.log('image =>', image);
         setSelectedImage(image);
     };
 
@@ -135,7 +144,7 @@ const Label = styled.span`
 const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 40%;
+    width: 50%;
 `;
 
 const Button = styled.button`

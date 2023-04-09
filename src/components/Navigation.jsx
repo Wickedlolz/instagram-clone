@@ -1,23 +1,11 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useFirebaseContext } from '../contexts/FirebaseContext';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HiOutlineUserCircle, HiHome } from 'react-icons/hi2';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { HiOutlinePlusCircle } from 'react-icons/hi';
 
 const Navigation = ({ handleNewPostClick }) => {
-    const navigate = useNavigate();
-    const { logOut } = useFirebaseContext();
-
-    const handleSignOut = (event) => {
-        logOut()
-            .then(() => {
-                navigate('/', { replace: true });
-            })
-            .catch((error) => console.error(error));
-    };
-
     return (
         <Header>
             <Logo
@@ -43,11 +31,9 @@ const Navigation = ({ handleNewPostClick }) => {
                     onClick={handleNewPostClick}
                     fontSize={24}
                 />
-                <HiOutlineUserCircle
-                    onClick={handleSignOut}
-                    cursor="pointer"
-                    fontSize={24}
-                />
+                <HeaderLink to="/profile">
+                    <HiOutlineUserCircle cursor="pointer" fontSize={24} />
+                </HeaderLink>
             </HeaderButtons>
         </Header>
     );
