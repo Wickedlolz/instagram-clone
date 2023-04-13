@@ -1,17 +1,21 @@
 import { FirebaseProvider } from './contexts/FirebaseContext';
 import { PostProvider } from './contexts/PostContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import Routes from './routes/Routes';
 
-import './App.css';
+import { Toaster } from 'react-hot-toast';
 
-//TODO: viktor - separate routes in another file and use it here to keep app component small much as possable
+import './App.css';
 
 function App() {
     return (
         <FirebaseProvider>
-            <PostProvider>
-                <Routes />
-            </PostProvider>
+            <NotificationProvider>
+                <Toaster />
+                <PostProvider>
+                    <Routes />
+                </PostProvider>
+            </NotificationProvider>
         </FirebaseProvider>
     );
 }

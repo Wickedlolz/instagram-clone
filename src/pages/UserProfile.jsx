@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
+import { useNotificationContext } from '../contexts/NotificationContext';
 import styled from 'styled-components';
 
 const UserProfile = () => {
-    const [userData, setUserData] = useState({});
     const [userPhotos, setUserPhotos] = useState([]);
     const [following, setFollowing] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
-    const { logOut } = useFirebaseContext();
+    const { user, logOut } = useFirebaseContext();
+    const { notifySuccess, notifyError } = useNotificationContext();
 
     useEffect(() => {
-        // Fetch user data
-        fetch('https://jsonplaceholder.typicode.com/users/1')
-            .then((response) => response.json())
-            .then((data) => setUserData(data));
-
         // Fetch user photos
         fetch('https://jsonplaceholder.typicode.com/photos?albumId=1')
             .then((response) => response.json())
-            .then((data) => setUserPhotos(data.slice(0, 9)));
+            .then((data) => setUserPhotos(data.slice(0, 9)))
+            .catch((error) => notifyError(error.message));
     }, []);
 
     const handleLogoutClick = () => {
@@ -28,11 +25,16 @@ const UserProfile = () => {
             .then(() => {
                 navigate('/', { replace: true });
             })
-            .catch((error) => console.error(error));
+            .catch((error) => notifyError(error));
     };
 
     const handleFollowClick = () => {
         setFollowing((state) => !state);
+        if (following) {
+            notifySuccess('Successfully unfollow this person!');
+        } else {
+            notifySuccess('Successfully follow this person!');
+        }
     };
 
     const handleImageClick = (image) => {
@@ -45,9 +47,9 @@ const UserProfile = () => {
 
     return (
         <Container>
-            <ProfilePicture src="https://via.placeholder.com/150" />
-            <Username>{userData.name}</Username>
-            <Bio>{userData.email}</Bio>
+            <ProfilePicture src="https://www.w3schools.com/w3images/avatar2.png" />
+            <Username>{user?.displayName}</Username>
+            <Bio>{user.email}</Bio>
             <Stats>
                 <Stat>
                     <Number>10</Number>
@@ -70,7 +72,7 @@ const UserProfile = () => {
             </ButtonWrapper>
 
             <Gallery>
-                {userPhotos.map((photo) => (
+                {userPhotos?.map((photo) => (
                     <Image
                         key={photo.id}
                         src={photo.thumbnailUrl}

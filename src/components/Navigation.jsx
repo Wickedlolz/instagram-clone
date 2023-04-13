@@ -8,10 +8,12 @@ import { HiOutlinePlusCircle } from 'react-icons/hi';
 const Navigation = ({ handleNewPostClick }) => {
     return (
         <Header>
-            <Logo
-                src="https://www.logo.wine/a/logo/Instagram/Instagram-Logo.wine.svg"
-                alt="Instagram"
-            />
+            <HeaderLink to="/">
+                <Logo
+                    src="https://www.logo.wine/a/logo/Instagram/Instagram-Logo.wine.svg"
+                    alt="Instagram"
+                />
+            </HeaderLink>
             <InputWrapper>
                 <SearchIcon
                     src="https://www.freeiconspng.com/thumbs/search-icon-png/search-icon-png-5.png"

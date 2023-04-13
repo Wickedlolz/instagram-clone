@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import { db } from '../firebase-config';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import {
+    collection,
+    onSnapshot,
+    query,
+    where,
+    addDoc,
+    serverTimestamp,
+} from 'firebase/firestore';
 import styled from 'styled-components';
 
 import Loader from '../components/Loader';
@@ -11,31 +18,24 @@ const Messages = () => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const messagesEndRef = useRef(null);
-    const messagesRef = collection(db, 'messages');
     const [isLoading, setIsLoading] = useState(true);
+    const messagesRef = collection(db, 'messages');
 
     useEffect(() => {
         setIsLoading(true);
-        fetch('https://jsonplaceholder.typicode.com/comments')
-            .then((res) => res.json())
-            .then((result) => {
-                setIsLoading(false);
-                setMessages(result);
-                // scrollToBottom();
+
+        const queryMessages = query(messagesRef, where('user', '==', user.uid));
+        const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+            let messages = [];
+            snapshot.forEach((doc) => {
+                messages.push({ ...doc.data(), id: doc.id });
             });
 
-        // const queryMessages = query(messagesRef, where("room", "==", room))
-        // const queryMessages = query(messagesRef);
-        // const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
-        //     let messages = [];
-        //     snapshot.forEach((doc) => {
-        //         messages.push({ ...doc.data(), id: doc.id});
-        //     });
+            setMessages(messages);
+            setIsLoading(false);
+        });
 
-        //     setMessages(messages);
-        // });
-
-        // return () => unsubscribe();
+        return () => unsubscribe();
     }, []);
 
     useEffect(() => {
@@ -56,14 +56,13 @@ const Messages = () => {
 
     const handleSendClick = () => {
         if (inputValue.length > 0) {
-            setMessages((state) => [
-                ...state,
-                {
-                    body: inputValue + user.email,
-                    name: user.email,
-                    sender: true,
-                },
-            ]);
+            addDoc(messagesRef, {
+                body: inputValue,
+                user: user.uid,
+                createdAt: serverTimestamp(),
+                sender: true,
+            });
+
             setInputValue('');
         }
     };
