@@ -94,6 +94,10 @@ const Container = styled.div`
     background-color: #fff;
     border-radius: 12px;
     overflow: hidden;
+
+    box-shadow: 0px 0px 22px -2px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 22px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 22px -2px rgba(0, 0, 0, 0.75);
 `;
 
 const Header = styled.div`
