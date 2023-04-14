@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import Messages from '../pages/Messages';
 import NotFound from '../pages/NotFound';
 import UserProfile from '../pages/UserProfile';
+import Register from '../pages/Register';
 
 import AuthGuard from '../utils/guards/AuthGuard';
 import GuestGuard from '../utils/guards/GuestGuard';
@@ -14,6 +15,7 @@ const AppRoutes = () => (
     <Routes>
         <Route element={<GuestGuard />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/accounts/register" element={<Register />} />
         </Route>
         <Route element={<AuthGuard />}>
             <Route

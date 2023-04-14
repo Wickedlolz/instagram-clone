@@ -69,18 +69,6 @@ const Login = () => {
                                 src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg"
                                 alt="Instagram screenshot 1"
                             />
-                            {/* <InstagramImage
-                            src="https://www.instagram.com/static/images/homepage/screenshot2.jpg/6f03eb85463c.jpg"
-                            alt="Instagram screenshot 2"
-                        />
-                        <InstagramImage
-                            src="https://www.instagram.com/static/images/homepage/screenshot3.jpg/f0c687aa6ec2.jpg"
-                            alt="Instagram screenshot 3"
-                        />
-                        <InstagramImage
-                            src="https://www.instagram.com/static/images/homepage/screenshot4.jpg/842fe5699220.jpg"
-                            alt="Instagram screenshot 4"
-                        /> */}
                         </InstagramImages>
                     </ImageWrapper>
                 </ImageContainer>
@@ -133,29 +121,29 @@ const Login = () => {
 
 export default Login;
 
-const Container = styled.main`
+export const Container = styled.main`
     display: flex;
     flex-direction: row;
     height: 100vh;
 `;
 
-const ImageContainer = styled.div`
+export const ImageContainer = styled.div`
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
-const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div`
     position: relative;
     width: 70%;
 `;
 
-const Image = styled.img`
+export const Image = styled.img`
     width: 100%;
 `;
 
-const InstagramImages = styled.div`
+export const InstagramImages = styled.div`
     position: absolute;
     top: 15%;
     left: 32.5%;
@@ -165,11 +153,11 @@ const InstagramImages = styled.div`
     width: 54.2%;
 `;
 
-const InstagramImage = styled.img`
+export const InstagramImage = styled.img`
     width: 100%;
 `;
 
-const FormContainer = styled.div`
+export const FormContainer = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -177,19 +165,19 @@ const FormContainer = styled.div`
     align-items: center;
 `;
 
-const Logo = styled.img`
+export const Logo = styled.img`
     width: 200px;
     margin-bottom: 30px;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 300px;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -197,7 +185,7 @@ const Input = styled.input`
     border-radius: 5px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
     width: 100%;
     padding: 10px;
     background-color: #0095f6;
@@ -211,7 +199,7 @@ const Button = styled.button`
     }
 `;
 
-const ErrorField = styled.p`
+export const ErrorField = styled.p`
     color: red;
     padding-top: 20px;
     width: 300px;
@@ -220,33 +208,33 @@ const ErrorField = styled.p`
     font-size: 14px;
 `;
 
-const ForgotPassword = styled.p`
+export const ForgotPassword = styled.p`
     margin-top: 10px;
     font-size: 14px;
     color: #003569;
     cursor: pointer;
 `;
 
-const SeparatorContainer = styled.div`
+export const SeparatorContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
 `;
 
-const SeparatorLine = styled.div`
+export const SeparatorLine = styled.div`
     width: 130px;
     height: 1px;
     background-color: #dbdbdb;
 `;
 
-const OrText = styled.span`
+export const OrText = styled.span`
     margin: 0 10px;
     font-size: 14px;
     color: #8e8e8e;
 `;
 
-const ProviderButton = styled.button`
+export const ProviderButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -262,20 +250,20 @@ const ProviderButton = styled.button`
     cursor: pointer;
 `;
 
-const RegisterContainer = styled.div`
+export const RegisterContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
 `;
 
-const RegisterText = styled.span`
+export const RegisterText = styled.span`
     margin-right: 5px;
     font-size: 14px;
     color: #8e8e8e;
 `;
 
-const RegisterButton = styled(Link)`
+export const RegisterButton = styled(Link)`
     border: none;
     background-color: transparent;
     color: rgb(0, 149, 246);

@@ -60,7 +60,7 @@ const Messages = () => {
                 body: inputValue,
                 user: user.uid,
                 createdAt: serverTimestamp(),
-                sender: true,
+                sender: user.uid,
             });
 
             setInputValue('');
@@ -80,7 +80,7 @@ const Messages = () => {
                         sender={message.sender}
                         // ref={messagesEndRef}
                     >
-                        {message.sender ? (
+                        {message.sender === user.uid ? (
                             <>
                                 <ChatAvatar
                                     src="https://www.w3schools.com/w3images/avatar2.png"
