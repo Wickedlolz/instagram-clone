@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { auth, googleProvider } from '../firebase-config';
+import { auth, googleProvider, db } from '../firebase-config';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -8,6 +8,7 @@ import {
     onAuthStateChanged,
     signInWithPopup,
 } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 import Loader from '../components/Loader';
 
@@ -17,8 +18,13 @@ export const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const signUp = (email, password) =>
-        createUserWithEmailAndPassword(auth, email, password);
+    const signUp = async (email, password) => {
+        await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, 'users', email), {
+            followers: [],
+            following: [],
+        });
+    };
 
     const signIn = (email, password) =>
         signInWithEmailAndPassword(auth, email, password);
