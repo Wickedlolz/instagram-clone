@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import { useNotificationContext } from '../contexts/NotificationContext';
@@ -18,6 +18,12 @@ const UserProfile = () => {
             .then((response) => response.json())
             .then((data) => setUserPhotos(data.slice(0, 9)))
             .catch((error) => notifyError(error.message));
+    }, []);
+
+    const makeInitials = useCallback((email) => {
+        const parts = email.split('@');
+        const initials = parts[0].charAt(0).toLocaleUpperCase();
+        return initials;
     }, []);
 
     const handleLogoutClick = () => {
@@ -47,7 +53,17 @@ const UserProfile = () => {
 
     return (
         <Container>
-            <ProfilePicture src="https://www.w3schools.com/w3images/avatar2.png" />
+            {user?.photoURL ? (
+                <ProfilePicture
+                    src={
+                        user?.photoURL ||
+                        'https://www.w3schools.com/w3images/avatar2.png'
+                    }
+                />
+            ) : (
+                <InitialsAvatar>{makeInitials(user.email)}</InitialsAvatar>
+            )}
+
             <Username>{user?.displayName}</Username>
             <Bio>{user.email}</Bio>
             <Stats>
@@ -162,12 +178,6 @@ const Button = styled.button`
     }
 `;
 
-// const Gallery = styled.div`
-//     display: grid;
-//     grid-template-columns: repeat(3, 1fr);
-//     grid-gap: 20px;
-//     margin-top: 50px;
-// `;
 const Gallery = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -217,4 +227,18 @@ const PreviewImage = styled.img`
     max-width: 80%;
     max-height: 80%;
     object-fit: contain;
+`;
+
+const InitialsAvatar = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #333;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-top: 50px;
 `;
