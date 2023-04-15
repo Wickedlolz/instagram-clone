@@ -6,6 +6,7 @@ import { FaGoogle } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
 import Footer from '../components/Footer';
+import MainLogo from '../assets/logo.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,6 +16,19 @@ const Login = () => {
     const { signIn, signInWithGoogle } = useFirebaseContext();
     const navigate = useNavigate();
 
+    /**
+     * Handle the form submission when the user tries to sign in.
+     *
+     * This function will prevent the default form submission behavior, set a loading
+     * state, clear any previous error message, and validate the form fields. If any
+     * field is missing, an error message will be shown. Otherwise, the sign-in
+     * function will be called with the email and password provided. If successful,
+     * the loading state will be reset and the user will be navigated to the home page.
+     * If an error occurs, the loading state will be reset and the error message will
+     * be displayed.
+     *
+     * @param {Event} event - The submit event triggered by the form submission.
+     */
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
@@ -38,6 +52,17 @@ const Login = () => {
             });
     };
 
+    /**
+     * Handle the sign-in with Google button click event.
+     *
+     * This function will set a loading state and clear any previous error message.
+     * It will then call the sign-in with Google function. If successful, the loading
+     * state will be reset and the user will be navigated to the home page. If an
+     * error occurs, the loading state will be reset and the error message will be
+     * displayed.
+     *
+     * @param {Event} event - The click event triggered by the sign-in with Google button.
+     */
     const handleSignInWithGoogle = (event) => {
         setIsLoading(true);
         setErrorText('');
@@ -63,17 +88,19 @@ const Login = () => {
                         <Image
                             src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
                             alt="Instagram phones"
+                            loading="lazy"
                         />
                         <InstagramImages>
                             <InstagramImage
                                 src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg"
                                 alt="Instagram screenshot 1"
+                                loading="lazy"
                             />
                         </InstagramImages>
                     </ImageWrapper>
                 </ImageContainer>
                 <FormContainer>
-                    <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
+                    <Logo src={MainLogo} alt="main logo" loading="lazy" />
                     <Form onSubmit={handleSubmit}>
                         <Input
                             type="email"

@@ -4,6 +4,8 @@ import { useFirebaseContext } from '../contexts/FirebaseContext';
 import Loader from '../components/Loader';
 import styled from 'styled-components';
 
+import MainLogo from '../assets/logo.png';
+
 const Register = () => {
     const { signUp, signInWithGoogle } = useFirebaseContext();
     const navigate = useNavigate();
@@ -47,7 +49,7 @@ const Register = () => {
         <Container>
             {isLoading && <Loader />}
             <Form onSubmit={handleSignUp}>
-                <Logo src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
+                <Logo src={MainLogo} />
                 <GoogleButton onClick={handleSignInWithGoogle}>
                     Login with Google
                 </GoogleButton>

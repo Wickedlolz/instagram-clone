@@ -20,12 +20,25 @@ const UserProfile = () => {
             .catch((error) => notifyError(error.message));
     }, []);
 
+    /**
+     * Returns the capitalized initials of the email address provided.
+     *
+     * @param {string} email - The email address to extract initials from.
+     * @returns {string} The capitalized initials of the email address.
+     */
     const makeInitials = useCallback((email) => {
         const parts = email.split('@');
         const initials = parts[0].charAt(0).toLocaleUpperCase();
         return initials;
     }, []);
 
+    /**
+     * Handle the logout button click event.
+     *
+     * This function will call the log out function. If successful, the user will be
+     * navigated to the home page. If an error occurs, an error notification will be
+     * displayed.
+     */
     const handleLogoutClick = () => {
         logOut()
             .then(() => {
@@ -54,12 +67,7 @@ const UserProfile = () => {
     return (
         <Container>
             {user?.photoURL ? (
-                <ProfilePicture
-                    src={
-                        user?.photoURL ||
-                        'https://www.w3schools.com/w3images/avatar2.png'
-                    }
-                />
+                <ProfilePicture src={user?.photoURL} />
             ) : (
                 <InitialsAvatar>{makeInitials(user.email)}</InitialsAvatar>
             )}
