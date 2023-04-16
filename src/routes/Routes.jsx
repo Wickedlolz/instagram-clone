@@ -15,7 +15,7 @@ const AppRoutes = () => (
     <Routes>
         <Route element={<GuestGuard />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/accounts/register" element={<Register />} />
+            <Route path="/accounts/signup" element={<Register />} />
         </Route>
         <Route element={<AuthGuard />}>
             <Route

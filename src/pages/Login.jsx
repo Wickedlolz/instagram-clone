@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle, FaFacebook } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
 import Footer from '../components/Footer';
@@ -13,7 +13,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorText, setErrorText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { signIn, signInWithGoogle } = useFirebaseContext();
+    const { signIn, signInWithGoogle, signInWithFacebook } =
+        useFirebaseContext();
     const navigate = useNavigate();
 
     /**
@@ -79,6 +80,22 @@ const Login = () => {
             });
     };
 
+    const handleSignInWithFacebook = (event) => {
+        setIsLoading(true);
+        setErrorText('');
+
+        signInWithFacebook()
+            .then(() => {
+                setIsLoading(false);
+                navigate('/');
+            })
+            .catch((error) => {
+                setIsLoading(false);
+                const errorString = error.message.substring(9).trim();
+                setErrorText(errorString);
+            });
+    };
+
     return (
         <>
             <Container>
@@ -125,9 +142,13 @@ const Login = () => {
                         <OrText>OR</OrText>
                         <SeparatorLine />
                     </SeparatorContainer>
-                    <ProviderButton onClick={handleSignInWithGoogle}>
+                    <ProviderButton google onClick={handleSignInWithGoogle}>
                         <FaGoogle />
                         Log in with Google
+                    </ProviderButton>
+                    <ProviderButton onClick={handleSignInWithFacebook}>
+                        <FaFacebook />
+                        Log in with Facebook
                     </ProviderButton>
                     {errorText.length > 0 && (
                         <ErrorField>{errorText}</ErrorField>
@@ -135,7 +156,7 @@ const Login = () => {
                     <ForgotPassword>Forgot password?</ForgotPassword>
                     <RegisterContainer>
                         <RegisterText>Not registered?</RegisterText>
-                        <RegisterButton to="/accounts/register">
+                        <RegisterButton to="/accounts/signup">
                             Register
                         </RegisterButton>
                     </RegisterContainer>
@@ -269,12 +290,14 @@ export const ProviderButton = styled.button`
     height: 30px;
     padding: 0 10px;
     border-radius: 5px;
-    background-color: #385185;
-    color: #fff;
+    background-color: ${(props) => (props.google ? '#fff' : '#385185')};
+    color: ${(props) => (props.google ? '#000' : '#fff')};
     font-size: 14px;
-    border: none;
+    border: ${(props) => (props.google ? '1px solid black' : 'none')};
     outline: none;
     cursor: pointer;
+
+    margin-top: 5px;
 `;
 
 export const RegisterContainer = styled.div`

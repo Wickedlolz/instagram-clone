@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { auth, googleProvider, db } from '../firebase-config';
+import { auth, googleProvider, db, facebookProvider } from '../firebase-config';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -31,6 +31,8 @@ export const FirebaseProvider = ({ children }) => {
 
     const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 
+    const signInWithFacebook = () => signInWithPopup(auth, facebookProvider);
+
     const logOut = () => signOut(auth);
 
     useEffect(() => {
@@ -45,7 +47,14 @@ export const FirebaseProvider = ({ children }) => {
 
     return (
         <FirebaseContext.Provider
-            value={{ user, signUp, signIn, signInWithGoogle, logOut }}
+            value={{
+                user,
+                signUp,
+                signIn,
+                signInWithGoogle,
+                signInWithFacebook,
+                logOut,
+            }}
         >
             {isLoading && <Loader />}
             {!isLoading && children ? children : <Outlet />}
