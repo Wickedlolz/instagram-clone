@@ -1,23 +1,47 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase-config';
+import { getDocs, collection } from 'firebase/firestore';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import { useNotificationContext } from '../contexts/NotificationContext';
 import styled from 'styled-components';
 
+import Loader from '../components/Loader';
+
 const UserProfile = () => {
-    const [userPhotos, setUserPhotos] = useState([]);
+    const [userPosts, setUserPosts] = useState([]);
     const [following, setFollowing] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
     const { user, logOut } = useFirebaseContext();
     const { notifySuccess, notifyError } = useNotificationContext();
+    const [isLoading, setIsLoading] = useState(true);
+    const postsCollectionRef = collection(db, 'posts');
 
     useEffect(() => {
-        // Fetch user photos
-        fetch('https://jsonplaceholder.typicode.com/photos?albumId=1')
-            .then((response) => response.json())
-            .then((data) => setUserPhotos(data.slice(0, 9)))
-            .catch((error) => notifyError(error.message));
+        const getMyPosts = async () => {
+            setIsLoading(true);
+            try {
+                const data = await getDocs(postsCollectionRef);
+                const filteredPosts = data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                }));
+
+                const myPosts = filteredPosts.filter(
+                    (post) => post.owner === user.email
+                );
+
+                setUserPosts(myPosts);
+            } catch (error) {
+                console.log(error);
+                notifyError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        getMyPosts();
     }, []);
 
     /**
@@ -64,6 +88,14 @@ const UserProfile = () => {
         setSelectedImage(null);
     };
 
+    if (isLoading) {
+        return (
+            <Container>
+                <Loader />
+            </Container>
+        );
+    }
+
     return (
         <Container>
             {user?.photoURL ? (
@@ -96,12 +128,12 @@ const UserProfile = () => {
             </ButtonWrapper>
 
             <Gallery>
-                {userPhotos?.map((photo) => (
+                {userPosts?.map((post) => (
                     <Image
-                        key={photo.id}
-                        src={photo.thumbnailUrl}
-                        alt={photo.title}
-                        onClick={() => handleImageClick(photo.url)}
+                        key={post.id}
+                        src={post.imageUrl}
+                        alt={post.caption}
+                        onClick={() => handleImageClick(post.imageUrl)}
                     />
                 ))}
             </Gallery>
@@ -167,7 +199,7 @@ const Label = styled.span`
 const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 30%;
 `;
 
 const Button = styled.button`
