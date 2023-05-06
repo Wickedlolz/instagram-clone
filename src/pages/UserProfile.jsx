@@ -18,29 +18,29 @@ const UserProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const postsCollectionRef = collection(db, 'posts');
 
+    const getMyPosts = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const data = await getDocs(postsCollectionRef);
+            const filteredPosts = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+
+            const myPosts = filteredPosts.filter(
+                (post) => post.owner === user.email
+            );
+
+            setUserPosts(myPosts);
+        } catch (error) {
+            console.log(error);
+            notifyError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
-        const getMyPosts = async () => {
-            setIsLoading(true);
-            try {
-                const data = await getDocs(postsCollectionRef);
-                const filteredPosts = data.docs.map((doc) => ({
-                    ...doc.data(),
-                    id: doc.id,
-                }));
-
-                const myPosts = filteredPosts.filter(
-                    (post) => post.owner === user.email
-                );
-
-                setUserPosts(myPosts);
-            } catch (error) {
-                console.log(error);
-                notifyError(error.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
         getMyPosts();
     }, []);
 
