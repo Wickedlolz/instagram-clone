@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, getDoc, doc } from 'firebase/firestore';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import { useNotificationContext } from '../contexts/NotificationContext';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 
 const UserProfile = () => {
     const [userPosts, setUserPosts] = useState([]);
+    const [userData, setUserData] = useState(null);
     const [following, setFollowing] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
@@ -18,7 +19,16 @@ const UserProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const postsCollectionRef = collection(db, 'posts');
 
-    const getMyPosts = useCallback(async () => {
+    /**
+     * Fetches user data and posts from Firestore, and sets them in state.
+     *
+     * @function
+     * @async
+     * @name getUserInfo
+     * @throws {Error} If there's an error fetching data from Firestore.
+     * @returns {void}
+     */
+    const getUserInfo = useCallback(async () => {
         setIsLoading(true);
         try {
             const data = await getDocs(postsCollectionRef);
@@ -31,6 +41,10 @@ const UserProfile = () => {
                 (post) => post.owner === user.email
             );
 
+            const userData = await getDoc(doc(db, 'users', `${user?.email}`));
+            const currentUserData = userData.data();
+
+            setUserData(currentUserData);
             setUserPosts(myPosts);
         } catch (error) {
             console.log(error);
@@ -41,7 +55,7 @@ const UserProfile = () => {
     }, []);
 
     useEffect(() => {
-        getMyPosts();
+        getUserInfo();
     }, []);
 
     /**
@@ -108,15 +122,15 @@ const UserProfile = () => {
             <Bio>{user.email}</Bio>
             <Stats>
                 <Stat>
-                    <Number>10</Number>
+                    <Number>{userPosts.length}</Number>
                     <Label>Posts</Label>
                 </Stat>
                 <Stat>
-                    <Number>500</Number>
+                    <Number>{userData?.followers.length}</Number>
                     <Label>Followers</Label>
                 </Stat>
                 <Stat>
-                    <Number>200</Number>
+                    <Number>{userData?.following.length}</Number>
                     <Label>Following</Label>
                 </Stat>
             </Stats>
