@@ -1,9 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
+
 import { HiOutlineHeart } from 'react-icons/hi';
 import { FaRegComment, FaRegPaperPlane } from 'react-icons/fa';
 
 const PostItem = ({ post }) => {
+    const { user } = useFirebaseContext();
+
     return (
         <Post>
             <PostHeader>
@@ -13,7 +18,15 @@ const PostItem = ({ post }) => {
                         'https://www.w3schools.com/w3images/avatar2.png'
                     }
                 />
-                <PostUsername>{post?.owner}</PostUsername>
+                <PostUsername
+                    to={
+                        user.email === post.owner
+                            ? '/profile'
+                            : `/profile/${post.owner}`
+                    }
+                >
+                    {post?.owner}
+                </PostUsername>
             </PostHeader>
             <PostImage
                 src={post?.imageUrl}
@@ -61,10 +74,12 @@ const PostAvatar = styled.img`
     margin-right: 16px;
 `;
 
-const PostUsername = styled.h4`
+const PostUsername = styled(Link)`
     font-size: 14px;
     font-weight: 600;
     margin: 0;
+    text-decoration: none;
+    color: inherit;
 `;
 
 const PostImage = styled.img`

@@ -42,7 +42,7 @@ const UserProfile = () => {
             );
 
             const userData = await getDoc(doc(db, 'users', `${user?.email}`));
-            const currentUserData = userData.data();
+            const currentUserData = { ...userData.data(), id: userData.id };
 
             setUserData(currentUserData);
             setUserPosts(myPosts);
@@ -80,7 +80,7 @@ const UserProfile = () => {
     const handleLogoutClick = () => {
         logOut()
             .then(() => {
-                navigate('/', { replace: true });
+                navigate('/login', { replace: true });
             })
             .catch((error) => notifyError(error));
     };
@@ -135,10 +135,17 @@ const UserProfile = () => {
                 </Stat>
             </Stats>
             <ButtonWrapper>
-                <Button following={following} onClick={handleFollowClick}>
-                    {following ? 'Following' : 'Follow'}
-                </Button>
-                <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+                {user.email !== userData.id && (
+                    <Button following={following} onClick={handleFollowClick}>
+                        {following ? 'Following' : 'Follow'}
+                    </Button>
+                )}
+                <LogoutButton
+                    isOwner={user.email === userData.id}
+                    onClick={handleLogoutClick}
+                >
+                    Logout
+                </LogoutButton>
             </ButtonWrapper>
 
             <Gallery>
@@ -258,6 +265,7 @@ const LogoutButton = styled.button`
     background-color: red;
     color: white;
     cursor: pointer;
+    margin-inline: ${(props) => (props.isOwner ? 'auto' : '')};
 
     &:hover {
         opacity: 0.8;
