@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import styled from 'styled-components';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
 import Footer from '../components/Footer';
@@ -13,8 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorText, setErrorText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { signIn, signInWithGoogle, signInWithFacebook } =
-        useFirebaseContext();
+    const { signIn, signInWithGoogle } = useFirebaseContext();
     const navigate = useNavigate();
 
     /**
@@ -80,22 +79,6 @@ const Login = () => {
             });
     };
 
-    const handleSignInWithFacebook = (event) => {
-        setIsLoading(true);
-        setErrorText('');
-
-        signInWithFacebook()
-            .then(() => {
-                setIsLoading(false);
-                navigate('/');
-            })
-            .catch((error) => {
-                setIsLoading(false);
-                const errorString = error.message.substring(9).trim();
-                setErrorText(errorString);
-            });
-    };
-
     return (
         <>
             <Container>
@@ -146,10 +129,6 @@ const Login = () => {
                         <FaGoogle />
                         Log in with Google
                     </ProviderButton>
-                    <ProviderButton onClick={handleSignInWithFacebook}>
-                        <FaFacebook />
-                        Log in with Facebook
-                    </ProviderButton>
                     {errorText.length > 0 && (
                         <ErrorField>{errorText}</ErrorField>
                     )}
@@ -195,8 +174,6 @@ export const InstagramImages = styled.div`
     position: absolute;
     top: 15%;
     left: 32.5%;
-    /* display: grid; */
-    /* grid-template-columns: repeat(2, 1fr); */
     grid-gap: 10px;
     width: 54.2%;
 `;

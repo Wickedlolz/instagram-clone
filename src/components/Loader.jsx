@@ -16,7 +16,7 @@ const LoaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-
+    z-index: 200;
     position: absolute;
     top: 50%;
     left: 50%;
