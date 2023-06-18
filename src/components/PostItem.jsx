@@ -22,7 +22,7 @@ const PostItem = ({ post }) => {
                     to={
                         user.email === post.owner
                             ? '/profile'
-                            : `/profile/${post.owner}`
+                            : `/profile/${post.id}`
                     }
                 >
                     {post?.owner}

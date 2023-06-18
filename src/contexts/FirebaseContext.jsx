@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { auth, googleProvider, db, facebookProvider } from '../firebase-config';
+import { auth, googleProvider, db } from '../firebase-config';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
     signInWithPopup,
 } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
+import { v4 } from 'uuid';
 
 import Loader from '../components/Loader';
 
@@ -20,7 +21,8 @@ export const FirebaseProvider = ({ children }) => {
 
     const signUp = async (email, password) => {
         await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, 'users', email), {
+        await setDoc(doc(db, 'users', v4()), {
+            email,
             followers: [],
             following: [],
         });
@@ -30,8 +32,6 @@ export const FirebaseProvider = ({ children }) => {
         signInWithEmailAndPassword(auth, email, password);
 
     const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
-
-    const signInWithFacebook = () => signInWithPopup(auth, facebookProvider);
 
     const logOut = () => signOut(auth);
 
@@ -52,7 +52,6 @@ export const FirebaseProvider = ({ children }) => {
                 signUp,
                 signIn,
                 signInWithGoogle,
-                signInWithFacebook,
                 logOut,
             }}
         >

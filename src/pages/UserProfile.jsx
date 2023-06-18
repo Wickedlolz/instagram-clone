@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
-import { getDocs, collection, getDoc, doc } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
 import { useNotificationContext } from '../contexts/NotificationContext';
 import styled from 'styled-components';
@@ -41,10 +41,14 @@ const UserProfile = () => {
                 (post) => post.owner === user.email
             );
 
-            const userData = await getDoc(doc(db, 'users', `${user?.email}`));
-            const currentUserData = { ...userData.data(), id: userData.id };
+            const usersData = await getDocs(collection(db, 'users'));
+            const users = usersData.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+            const currentUser = users.find((x) => x.email === user.email);
 
-            setUserData(currentUserData);
+            setUserData(currentUser);
             setUserPosts(myPosts);
         } catch (error) {
             console.log(error);
@@ -220,7 +224,7 @@ const Label = styled.span`
 const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 30%;
+    width: 270px;
 `;
 
 const Button = styled.button`
