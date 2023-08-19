@@ -119,14 +119,14 @@ const UserProfile = () => {
             {user?.photoURL ? (
                 <ProfilePicture src={user?.photoURL} />
             ) : (
-                <InitialsAvatar>{makeInitials(user.email)}</InitialsAvatar>
+                <InitialsAvatar>{makeInitials(user?.email)}</InitialsAvatar>
             )}
 
             <Username>{user?.displayName}</Username>
-            <Bio>{user.email}</Bio>
+            <Bio>{user?.email}</Bio>
             <Stats>
                 <Stat>
-                    <Number>{userPosts.length}</Number>
+                    <Number>{userPosts?.length}</Number>
                     <Label>Posts</Label>
                 </Stat>
                 <Stat>
@@ -139,13 +139,13 @@ const UserProfile = () => {
                 </Stat>
             </Stats>
             <ButtonWrapper>
-                {user.email !== userData.id && (
+                {user?.email !== userData?.id && (
                     <Button following={following} onClick={handleFollowClick}>
                         {following ? 'Following' : 'Follow'}
                     </Button>
                 )}
                 <LogoutButton
-                    isOwner={user.email === userData.id}
+                    isOwner={user?.email === userData?.id}
                     onClick={handleLogoutClick}
                 >
                     Logout

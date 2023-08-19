@@ -1,3 +1,4 @@
 {
-    "login_btn_text": "Login"
+    "login_btn_text": "Login",
+    "auth_all_fields_required": "All fields are required."
 }

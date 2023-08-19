@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
+
 import { FaGoogle } from 'react-icons/fa';
 
 import Loader from '../components/Loader';
@@ -9,6 +11,7 @@ import Footer from '../components/Footer';
 import MainLogo from '../assets/logo.png';
 
 const Login = () => {
+    const intl = useIntl();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorText, setErrorText] = useState('');
@@ -35,7 +38,10 @@ const Login = () => {
         setErrorText('');
 
         if (email.length === 0 || password.length === 0) {
-            setErrorText('All fields are required.');
+            setErrorText(
+                intl.formatMessage({ id: 'auth_all_fields_required' })
+            );
+            setIsLoading(false);
             return;
         }
 
@@ -107,7 +113,7 @@ const Login = () => {
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                             placeholder="Email"
-                            required
+                            // required
                         />
                         <Input
                             type="password"
@@ -116,7 +122,7 @@ const Login = () => {
                                 setPassword(event.target.value)
                             }
                             placeholder="Password"
-                            required
+                            // required
                         />
                         <Button>Log In</Button>
                     </Form>
