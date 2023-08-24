@@ -20,15 +20,12 @@ const UserProfile = () => {
     const postsCollectionRef = collection(db, 'posts');
 
     /**
-     * Fetches user data and posts from Firestore, and sets them in state.
+     * Retrieves user information and their associated posts from the database.
+     * Updates the state with the fetched data or handles errors accordingly.
      *
-     * @function
-     * @async
-     * @name getUserInfo
-     * @throws {Error} If there's an error fetching data from Firestore.
      * @returns {void}
      */
-    const getUserInfo = useCallback(async () => {
+    const getUserInfo = async () => {
         setIsLoading(true);
         try {
             const data = await getDocs(postsCollectionRef);
@@ -56,7 +53,7 @@ const UserProfile = () => {
         } finally {
             setIsLoading(false);
         }
-    }, []);
+    };
 
     useEffect(() => {
         getUserInfo();
