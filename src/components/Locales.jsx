@@ -4,7 +4,9 @@ import { IntlProvider } from 'react-intl';
 const loadLocaleData = (locale) => {
     switch (locale) {
         case 'bg-BG':
+            return import('../utils/localization/bg.json');
         case 'en-US':
+            return import('../utils/localization/en.json');
         default:
             return import('../utils/localization/en.json');
     }

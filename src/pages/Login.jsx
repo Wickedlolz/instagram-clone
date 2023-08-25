@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 import { FaGoogle } from 'react-icons/fa';
@@ -112,8 +112,10 @@ const Login = () => {
                             type="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
-                            placeholder="Email"
-                            // required
+                            placeholder={intl.formatMessage({
+                                id: 'lbl_email',
+                            })}
+                            required
                         />
                         <Input
                             type="password"
@@ -121,28 +123,38 @@ const Login = () => {
                             onChange={(event) =>
                                 setPassword(event.target.value)
                             }
-                            placeholder="Password"
-                            // required
+                            placeholder={intl.formatMessage({
+                                id: 'lbl_password',
+                            })}
+                            required
                         />
-                        <Button>Log In</Button>
+                        <Button>
+                            <FormattedMessage id="auth_login_lbl" />
+                        </Button>
                     </Form>
                     <SeparatorContainer>
                         <SeparatorLine />
-                        <OrText>OR</OrText>
+                        <OrText>
+                            <FormattedMessage id="lbl_or" />
+                        </OrText>
                         <SeparatorLine />
                     </SeparatorContainer>
                     <ProviderButton google onClick={handleSignInWithGoogle}>
                         <FaGoogle />
-                        Log in with Google
+                        <FormattedMessage id="auth_login_with_google_lbl" />
                     </ProviderButton>
                     {errorText.length > 0 && (
                         <ErrorField>{errorText}</ErrorField>
                     )}
-                    <ForgotPassword>Forgot password?</ForgotPassword>
+                    <ForgotPassword>
+                        <FormattedMessage id="lbl_forgot_password" />
+                    </ForgotPassword>
                     <RegisterContainer>
-                        <RegisterText>Not registered?</RegisterText>
+                        <RegisterText>
+                            <FormattedMessage id="lbl_not_registered" />
+                        </RegisterText>
                         <RegisterButton to="/accounts/signup">
-                            Register
+                            <FormattedMessage id="auth_register_lbl" />
                         </RegisterButton>
                     </RegisterContainer>
                 </FormContainer>

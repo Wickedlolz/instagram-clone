@@ -1,4 +1,12 @@
 {
     "login_btn_text": "Login",
-    "auth_all_fields_required": "All fields are required."
+    "auth_all_fields_required": "All fields are required.",
+    "auth_login_lbl": "Login",
+    "auth_register_lbl": "Register",
+    "auth_login_with_google_lbl": "Log in with Google",
+    "lbl_or": "OR",
+    "lbl_email": "Email",
+    "lbl_password": "Password",
+    "lbl_forgot_password": "Forgot password?",
+    "lbl_not_registered": "Not registered?"
 }
