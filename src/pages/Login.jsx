@@ -10,6 +10,9 @@ import Loader from '../components/Loader';
 import Footer from '../components/Footer';
 import MainLogo from '../assets/logo.png';
 
+import InstagramScreenshot from '../assets/d6bf0c928b5a.jpeg';
+import InstagramPhones from '../assets/43cc71bb1b43.png';
+
 const Login = () => {
     const intl = useIntl();
     const [email, setEmail] = useState('');
@@ -92,13 +95,13 @@ const Login = () => {
                 <ImageContainer>
                     <ImageWrapper>
                         <Image
-                            src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
+                            src={InstagramPhones}
                             alt="Instagram phones"
                             loading="lazy"
                         />
                         <InstagramImages>
                             <InstagramImage
-                                src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg"
+                                src={InstagramScreenshot}
                                 alt="Instagram screenshot 1"
                                 loading="lazy"
                             />
