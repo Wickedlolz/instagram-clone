@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { db } from '../firebase-config';
 import { getDocs, collection } from 'firebase/firestore';
 import { useFirebaseContext } from '../contexts/FirebaseContext';
@@ -9,6 +10,7 @@ import styled from 'styled-components';
 import Loader from '../components/Loader';
 
 const UserProfile = () => {
+    const intl = useIntl();
     const [userPosts, setUserPosts] = useState([]);
     const [userData, setUserData] = useState(null);
     const [following, setFollowing] = useState(false);
@@ -89,9 +91,9 @@ const UserProfile = () => {
     const handleFollowClick = () => {
         setFollowing((state) => !state);
         if (following) {
-            notifySuccess('Successfully unfollow this person!');
+            notifySuccess(intl.formatMessage({ id: 'user_unfollow_success' }));
         } else {
-            notifySuccess('Successfully follow this person!');
+            notifySuccess(intl.formatMessage({ id: 'user_follow_success' }));
         }
     };
 
@@ -124,28 +126,36 @@ const UserProfile = () => {
             <Stats>
                 <Stat>
                     <Number>{userPosts?.length}</Number>
-                    <Label>Posts</Label>
+                    <Label>
+                        <FormattedMessage id="user_posts_lbl" />
+                    </Label>
                 </Stat>
                 <Stat>
                     <Number>{userData?.followers.length}</Number>
-                    <Label>Followers</Label>
+                    <Label>
+                        <FormattedMessage id="user_followers" />
+                    </Label>
                 </Stat>
                 <Stat>
                     <Number>{userData?.following.length}</Number>
-                    <Label>Following</Label>
+                    <Label>
+                        <FormattedMessage id="user_following" />
+                    </Label>
                 </Stat>
             </Stats>
             <ButtonWrapper>
                 {user?.email !== userData?.id && (
                     <Button following={following} onClick={handleFollowClick}>
-                        {following ? 'Following' : 'Follow'}
+                        {following
+                            ? intl.formatMessage({ id: 'user_following' })
+                            : intl.formatMessage({ id: 'user_follow' })}
                     </Button>
                 )}
                 <LogoutButton
                     isOwner={user?.email === userData?.id}
                     onClick={handleLogoutClick}
                 >
-                    Logout
+                    <FormattedMessage id="auth_logout_lbl" />
                 </LogoutButton>
             </ButtonWrapper>
 
