@@ -1,25 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useFirebaseContext } from '../contexts/FirebaseContext';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Welcome from './Welcome';
 import Navigation from './Navigation';
 import NewPost from './NewPost';
 
 const Layout = ({ children }) => {
-    const { user } = useFirebaseContext();
     const [showNewPost, setShowNewPost] = useState(false);
-    const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if (!user) {
-    //         // return <Welcome />;
-    //         // return <Navigate to="/login" replace />;
-    //         navigate('/login', { replace: true });
-    //         return;
-    //     }
-    // }, [user]);
 
     const handleNewPostClick = () => {
         setShowNewPost(true);
@@ -56,5 +42,4 @@ const Main = styled.div`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    /* margin-top: 30px; */
 `;

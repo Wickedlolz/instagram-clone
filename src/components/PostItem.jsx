@@ -90,8 +90,6 @@ const PostImage = styled.img`
 `;
 
 const PostFooter = styled.div`
-    /* display: flex;
-    align-items: center; */
     padding: 16px;
 `;
 
