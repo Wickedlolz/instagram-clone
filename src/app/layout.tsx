@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 
 import './globals.css';
 import 'slick-carousel/slick/slick.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
     title: 'Shopping Mart - A place for all',
