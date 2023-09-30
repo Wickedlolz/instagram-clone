@@ -1,6 +1,8 @@
-import Header from '@/components/Header';
-import './globals.css';
 import type { Metadata } from 'next';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+
+import './globals.css';
 
 export const metadata: Metadata = {
     title: 'Shopping Mart - A place for all',
@@ -15,8 +17,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="font-bodyFont w-full bg-main-bg text-darkText">
-                <Header />
-                {children}
+                <Layout>
+                    <Header />
+                    {children}
+                </Layout>
             </body>
         </html>
     );

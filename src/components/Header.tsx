@@ -1,10 +1,16 @@
+'use client';
+import { useSession, signIn, signOut } from 'next-auth/react';
+
 import Container from './Container';
 import Logo from './Logo';
 import { IoMdCart } from 'react-icons/io';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiLogOut } from 'react-icons/fi';
 import { AiOutlineUser } from 'react-icons/ai';
+import Image from 'next/image';
 
 const Header = () => {
+    const { data: session } = useSession();
+
     return (
         <div className="bg-bodyColor h-20">
             <Container className="h-full flex items-center justify-between md:gap-x-5 md:justify-start">
@@ -17,10 +23,15 @@ const Header = () => {
                         className="placeholder:text-sm flex-1 outline-none"
                     />
                 </div>
-                <div className="headerAuthDiv">
-                    <AiOutlineUser className="text-2xl" />
-                    <p className="text-sm font-semibold">Login/Register</p>
-                </div>
+                {!session && (
+                    <div
+                        onClick={() => signIn()}
+                        className="headerAuthDiv cursor-pointer"
+                    >
+                        <AiOutlineUser className="text-2xl" />
+                        <p className="text-sm font-semibold">Login/Register</p>
+                    </div>
+                )}
                 <div className="bg-black hover:bg-slate-950 rounded-full text-slate-100 hover:text-white flex items-center justify-center gap-x-1 px-3 py-1.5 border-[1px] hover:border-orange-600 duration-200 relative">
                     <IoMdCart className="text-2xl" />
                     <p className="text-sm font-semibold">$0.00</p>
@@ -28,6 +39,24 @@ const Header = () => {
                         0
                     </span>
                 </div>
+                {session && (
+                    <>
+                        <Image
+                            src={session?.user?.image as string}
+                            alt="user avatar"
+                            width={40}
+                            height={40}
+                            className="rounded-full object-cover"
+                        />
+                        <div
+                            onClick={() => signOut()}
+                            className="headerAuthDiv cursor-pointer px-2 gap-x-1"
+                        >
+                            <FiLogOut className="text-2xl" />
+                            <p className="text-sm font-semibold">Logout</p>
+                        </div>
+                    </>
+                )}
             </Container>
         </div>
     );
