@@ -10,3 +10,9 @@
     font-weight: 300 900;
     font-stretch: 75% 12%;
 }
+
+@layer components {
+    .headerAuthDiv {
+        @apply bg-bgLight text-gray-500 flex items-center justify-between p-1.5 rounded-full hover:bg-white border-[1px] border-gray-200 hover:border-orange-500 duration-200;
+    }
+}
