@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 
 import './globals.css';
+import 'slick-carousel/slick/slick.css';
 
 export const metadata: Metadata = {
     title: 'Shopping Mart - A place for all',

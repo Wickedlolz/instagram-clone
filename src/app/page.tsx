@@ -1,8 +1,9 @@
+import Banner from '@/components/Banner';
+
 export default function Home() {
     return (
         <main>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-            deleniti.
+            <Banner />
         </main>
     );
 }
