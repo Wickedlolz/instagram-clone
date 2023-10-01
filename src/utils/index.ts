@@ -1,4 +1,5 @@
 import { productData } from '@/constants/data';
+import { IProduct } from '@/interfaces/product';
 
 export const getProducts = async () => {
     const response = await fetch(
@@ -31,4 +32,10 @@ export const calculatePercentage = (oldPrice: number, price: number) => {
     return !!parseFloat(price.toString()) && !!parseFloat(oldPrice.toString())
         ? (100 - (oldPrice / price) * 100).toFixed(0)
         : 0;
+};
+
+export const calculateTotalAmount = (products: IProduct[]) => {
+    return products.reduce((acc, value) => {
+        return (acc += value.price * value.quantity);
+    }, 0);
 };
