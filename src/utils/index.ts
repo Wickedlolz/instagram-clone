@@ -1,3 +1,5 @@
+import { productData } from '@/constants/data';
+
 export const getProducts = async () => {
     const response = await fetch(
         'https://fakestoreapiserver.reactbd.com/smart'
@@ -18,6 +20,11 @@ export const getTrendingProducts = async () => {
         throw new Error('Faild to fetch products');
     }
     return res.json();
+};
+
+export const getSingleProudct = (_id: number) => {
+    const item = productData.find((product) => product._id === _id);
+    return item;
 };
 
 export const calculatePercentage = (oldPrice: number, price: number) => {
