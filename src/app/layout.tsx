@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import './globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
     title: 'Shopping Mart - A place for all',
@@ -22,6 +23,7 @@ export default function RootLayout({
                 <Layout>
                     <Header />
                     {children}
+                    <Footer />
                 </Layout>
             </body>
         </html>
