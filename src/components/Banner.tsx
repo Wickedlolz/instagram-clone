@@ -59,6 +59,7 @@ const Banner = () => {
                         src={BannerOne}
                         alt="Banner One"
                         className="w-full h-full relative"
+                        priority
                     />
                     <BannerText title="Outerwear Picks" />
                 </div>
