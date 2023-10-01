@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useAppDispatch } from '@/store';
+import { addToCart } from '@/store/slices/shoppingSlice';
 import { toast } from 'react-toastify';
-
 import { IProduct } from '@/interfaces/product';
+
 import { IoMdCart } from 'react-icons/io';
 import { MdFavoriteBorder } from 'react-icons/md';
 import FormattedPrice from './FormattedPrice';
@@ -13,6 +15,13 @@ type SingleProductProps = {
 };
 
 const SingleProduct = ({ product }: SingleProductProps) => {
+    const dispatch = useAppDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(product));
+        toast.success(`${product?.title.substring(0, 15)} added successfully!`);
+    };
+
     return (
         <div className="grid lg:grid-cols-2 gap-5 bg-white p-4 rounded-lg">
             <div>
@@ -45,14 +54,7 @@ const SingleProduct = ({ product }: SingleProductProps) => {
                     </span>
                 </div>
                 <div
-                    onClick={() =>
-                        toast.success(
-                            `${product?.title.substring(
-                                0,
-                                15
-                            )} added successfully!`
-                        )
-                    }
+                    onClick={handleAddToCart}
                     className="flex items-center cursor-pointer group"
                 >
                     <button className="bg-darkText text-slate-100 px-6 py-3 text-sm uppercase flex items-center border-r-[1px] border-r-slate-500">
