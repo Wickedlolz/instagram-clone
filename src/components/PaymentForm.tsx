@@ -17,16 +17,19 @@ const PaymentForm = () => {
     const handleCheckout = async () => {
         try {
             const stripe = await stripePromise;
-            const response = await fetch('http://localhost:3000/api/checkout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    items: cartItems,
-                    email: session?.user?.email,
-                }),
-            });
+            const response = await fetch(
+                'https://smart-ecommerce.vercel.app/api/checkout',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        items: cartItems,
+                        email: session?.user?.email,
+                    }),
+                }
+            );
 
             if (!response.ok) {
                 throw { message: response.statusText };
