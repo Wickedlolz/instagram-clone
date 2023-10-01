@@ -6,6 +6,7 @@ import { resetCart } from '@/store/slices/shoppingSlice';
 
 import Container from '@/components/Container';
 import CartItems from '@/components/CartItems';
+import PaymentForm from '@/components/PaymentForm';
 
 const CartPage = () => {
     const cartItems = useAppSelector((state) => state.shopping.cartItems);
@@ -26,8 +27,7 @@ const CartPage = () => {
                                 reset cart
                             </button>
                         </div>
-                        {/* Payment Form */}
-                        {/* <PaymentForm /> */}
+                        <PaymentForm />
                     </div>
                 </Container>
             ) : (
