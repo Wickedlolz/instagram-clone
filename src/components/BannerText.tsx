@@ -36,7 +36,7 @@ const BannerText = ({ title }: BannerTextProps) => {
                         Find out more
                     </button>
                     <button className="py-3 px-6 rounded-full bg-slate-200 hover:bg-white duration-200 text-sm uppercase font-semibold">
-                        Show Now
+                        Shop Now
                     </button>
                 </motion.div>
             </Container>
