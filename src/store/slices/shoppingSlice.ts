@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IProduct } from '@/interfaces/product';
 import { IUser } from '@/interfaces/user';
 
-interface IInitialState {
+export interface IInitialState {
     product: IProduct | null;
     cartItems: IProduct[];
     user: IUser | null;
