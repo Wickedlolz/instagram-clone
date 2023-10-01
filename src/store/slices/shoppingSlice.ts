@@ -6,14 +6,14 @@ export interface IInitialState {
     product: IProduct | null;
     cartItems: IProduct[];
     user: IUser | null;
-    orders: IOrder[];
+    orders: IOrder | null;
 }
 
 const initialState: IInitialState = {
     product: null,
     cartItems: [],
     user: null,
-    orders: [],
+    orders: null,
 };
 
 export const shoppingSlice = createSlice({
@@ -67,7 +67,7 @@ export const shoppingSlice = createSlice({
             state.orders = action.payload;
         },
         resetOrder: (state, action) => {
-            state.orders = [];
+            state.orders = null;
         },
     },
 });

@@ -4,6 +4,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { addUser } from '@/store/slices/shoppingSlice';
 import { calculateTotalAmount } from '@/utils';
 
 import Container from './Container';
@@ -12,12 +13,12 @@ import Logo from './Logo';
 import { IoMdCart } from 'react-icons/io';
 import { FiSearch, FiLogOut } from 'react-icons/fi';
 import { AiOutlineUser } from 'react-icons/ai';
-import { addUser } from '@/store/slices/shoppingSlice';
+import { BsBookmarks } from 'react-icons/bs';
 
 const Header = () => {
     const { data: session } = useSession();
     const dispatch = useAppDispatch();
-    const cartItems = useAppSelector((state) => state.shopping.cartItems);
+    const { cartItems, orders } = useAppSelector((state) => state.shopping);
     const totalAmount = calculateTotalAmount(cartItems);
 
     useEffect(() => {
@@ -73,6 +74,15 @@ const Header = () => {
                             height={40}
                             className="rounded-full object-cover"
                         />
+                        {orders?.order?.length! > 0 && (
+                            <Link
+                                href={'/order'}
+                                className="headerAuthDiv px-2 gap-x-1 cursor-pointer"
+                            >
+                                <BsBookmarks className="text-2xl" />
+                                <p className="text-sm font-semibold">Orders</p>
+                            </Link>
+                        )}
                         <div
                             onClick={() => signOut()}
                             className="headerAuthDiv cursor-pointer px-2 gap-x-1"
