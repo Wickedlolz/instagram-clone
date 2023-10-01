@@ -7,9 +7,11 @@ import { IoMdCart } from 'react-icons/io';
 import { FiSearch, FiLogOut } from 'react-icons/fi';
 import { AiOutlineUser } from 'react-icons/ai';
 import Image from 'next/image';
+import { useAppSelector } from '@/store';
 
 const Header = () => {
     const { data: session } = useSession();
+    const cartItems = useAppSelector((state) => state.shopping.cartItems);
 
     return (
         <div className="bg-bodyColor h-20 sticky top-0 z-50">
@@ -36,7 +38,7 @@ const Header = () => {
                     <IoMdCart className="text-2xl" />
                     <p className="text-sm font-semibold">$0.00</p>
                     <span className="bg-white text-orange-600 rounded-full text-xs font-semibold absolute -right-2 -top-1 w-5 h-5 flex items-center justify-center shadow-xl shadow-black">
-                        0
+                        {cartItems.length}
                     </span>
                 </div>
                 {session && (
