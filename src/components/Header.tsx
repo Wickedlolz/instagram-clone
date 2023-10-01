@@ -1,10 +1,12 @@
 'use client';
+import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { useAppSelector } from '@/store';
 import { calculateTotalAmount } from '@/utils';
 
 import Container from './Container';
+import FormattedPrice from './FormattedPrice';
 import Logo from './Logo';
 import { IoMdCart } from 'react-icons/io';
 import { FiSearch, FiLogOut } from 'react-icons/fi';
@@ -36,15 +38,17 @@ const Header = () => {
                         <p className="text-sm font-semibold">Login/Register</p>
                     </div>
                 )}
-                <div className="bg-black hover:bg-slate-950 rounded-full text-slate-100 hover:text-white flex items-center justify-center gap-x-1 px-3 py-1.5 border-[1px] hover:border-orange-600 duration-200 relative">
-                    <IoMdCart className="text-2xl" />
-                    <p className="text-sm font-semibold">
-                        ${totalAmount.toFixed(2)}
-                    </p>
-                    <span className="bg-white text-orange-600 rounded-full text-xs font-semibold absolute -right-2 -top-1 w-5 h-5 flex items-center justify-center shadow-xl shadow-black">
-                        {cartItems.length}
-                    </span>
-                </div>
+                <Link href="/cart">
+                    <div className="bg-black hover:bg-slate-950 rounded-full text-slate-100 hover:text-white flex items-center justify-center gap-x-1 px-3 py-1.5 border-[1px] hover:border-orange-600 duration-200 relative">
+                        <IoMdCart className="text-2xl" />
+                        <p className="text-sm font-semibold">
+                            <FormattedPrice amount={totalAmount} />
+                        </p>
+                        <span className="bg-white text-orange-600 rounded-full text-xs font-semibold absolute -right-2 -top-1 w-5 h-5 flex items-center justify-center shadow-xl shadow-black">
+                            {cartItems.length}
+                        </span>
+                    </div>
+                </Link>
                 {session && (
                     <>
                         <Image
