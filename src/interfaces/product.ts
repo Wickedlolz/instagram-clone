@@ -10,3 +10,8 @@ export interface IProduct {
     rating: number;
     quantity: number;
 }
+
+export interface IOrder {
+    order: IProduct[];
+    id: string;
+}
