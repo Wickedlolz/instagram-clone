@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useEffect } from 'react';
 import Image from 'next/image';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { calculateTotalAmount } from '@/utils';
 
 import Container from './Container';
@@ -11,11 +12,25 @@ import Logo from './Logo';
 import { IoMdCart } from 'react-icons/io';
 import { FiSearch, FiLogOut } from 'react-icons/fi';
 import { AiOutlineUser } from 'react-icons/ai';
+import { addUser } from '@/store/slices/shoppingSlice';
 
 const Header = () => {
     const { data: session } = useSession();
+    const dispatch = useAppDispatch();
     const cartItems = useAppSelector((state) => state.shopping.cartItems);
     const totalAmount = calculateTotalAmount(cartItems);
+
+    useEffect(() => {
+        if (session) {
+            dispatch(
+                addUser({
+                    name: session?.user?.name,
+                    email: session?.user?.email,
+                    image: session?.user?.image,
+                })
+            );
+        }
+    }, [dispatch, session]);
 
     return (
         <div className="bg-bodyColor h-20 sticky top-0 z-50">

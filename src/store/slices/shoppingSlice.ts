@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IProduct } from '@/interfaces/product';
+import { IUser } from '@/interfaces/user';
 
 interface IInitialState {
-    products: IProduct[];
     product: IProduct | null;
     cartItems: IProduct[];
+    user: IUser | null;
 }
 
 const initialState: IInitialState = {
-    products: [],
     product: null,
     cartItems: [],
+    user: null,
 };
 
 export const shoppingSlice = createSlice({
@@ -54,6 +55,12 @@ export const shoppingSlice = createSlice({
         resetCart: (state) => {
             state.cartItems = [];
         },
+        addUser: (state, action) => {
+            state.user = action.payload;
+        },
+        deleteUser: (state) => {
+            state.user = null;
+        },
     },
 });
 
@@ -63,6 +70,8 @@ export const {
     decreaseQuantity,
     removeProductFromCart,
     resetCart,
+    addUser,
+    deleteUser,
 } = shoppingSlice.actions;
 
 export default shoppingSlice.reducer;
