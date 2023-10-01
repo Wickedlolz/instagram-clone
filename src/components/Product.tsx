@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { IProduct } from '@/interfaces/product';
+import { useAppDispatch } from '@/store';
+import { addToCart } from '@/store/slices/shoppingSlice';
 import { calculatePercentage } from '@/utils';
+import { IProduct } from '@/interfaces/product';
 import { toast } from 'react-toastify';
 
 import { IoIosStar } from 'react-icons/io';
@@ -14,11 +16,18 @@ type ProductProps = {
 };
 
 const Product = ({ item }: ProductProps) => {
+    const dispatch = useAppDispatch();
+
     const startArray = Array.from({ length: item?.rating }, (_, index) => (
         <span key={index} className="text-yellow-400">
             <IoIosStar />
         </span>
     ));
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(item));
+        toast.success(`${item?.title.substring(0, 15)} added successfully!`);
+    };
 
     return (
         <div className="w-full rounded-lg overflow-hidden">
@@ -64,15 +73,7 @@ const Product = ({ item }: ProductProps) => {
                     </div>
                     <div className="flex items-center justify-between">
                         <button
-                            onClick={() =>
-                                // dispatch(addToCart(item)) &&
-                                toast.success(
-                                    `${item?.title.substring(
-                                        0,
-                                        15
-                                    )} added successfully!`
-                                )
-                            }
+                            onClick={handleAddToCart}
                             className="bg-orange-600 px-4 py-2 text-sm tracking-wide rounded-full text-slate-100 hover:bg-orange-800 hover:text-white duration-200"
                         >
                             add to cart
